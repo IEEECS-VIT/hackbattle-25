@@ -6,6 +6,7 @@ import FaqSection from "src/components/FaqSection";
 import SpeechBubble from "src/app/components/SpeechBubble";
 import PS from "./components/ps";
 import CustomCursor from "./components/Cursor";
+import JoinTeam from "src/app/components/JoinTeam"; 
 
 export default function Page() {
   const [speechBubbleComplete, setSpeechBubbleComplete] = useState(false);
@@ -14,7 +15,6 @@ export default function Page() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Ensure we're on the client side
     setIsClient(true);
     
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -23,7 +23,6 @@ export default function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Don't render anything until client-side hydration is complete
   if (!isClient) {
     return <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
     <img src="/loader.gif" alt="Loading..." className="w-32 h-32" />
@@ -33,8 +32,7 @@ export default function Page() {
   return (
     <div>
       {!isMobile && <CustomCursor />}
-      
-      {/* Mobile: Show SpeechBubble first, then Home after bubble is done */}
+
       {isMobile ? (
         <>
           {!speechBubbleComplete && (
@@ -45,17 +43,18 @@ export default function Page() {
           )}
         </>
       ) : (
-        /* Desktop: Show Home directly */
+
         <Home onFinish={() => setLandingLoaded(true)} />
       )}
 
-      {/* Only render other pages after landing sequence is complete */}
       {((isMobile && landingLoaded && speechBubbleComplete) ||
   (!isMobile && landingLoaded)) && (
   <>
     <About />
     <PS />
     <FaqSection />
+    <JoinTeam /> 
+
   </>
 )}
 
