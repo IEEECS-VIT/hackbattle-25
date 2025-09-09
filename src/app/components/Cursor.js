@@ -3,14 +3,19 @@ import { useEffect } from "react";
 
 export default function CustomCursor() {
   useEffect(() => {
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+    if (isTouchDevice) return; // 🚫 Skip on mobiles/tablets
+
     const cursor = document.createElement("img");
-    cursor.src = "/diamond-pickaxe.gif";
+    cursor.src = "/diamond-pickaxe.webp";
     cursor.style.position = "fixed";
     cursor.style.pointerEvents = "none";
     cursor.style.width = "36px";
     cursor.style.height = "36px";
     cursor.style.zIndex = "9999";
-    cursor.style.transform = "translate(-40%, -40%) scaleX(-1)"; // ✅ flipped
+    cursor.style.transform = "translate(-40%, -40%) scaleX(-1)";
     document.body.appendChild(cursor);
 
     const move = (e) => {

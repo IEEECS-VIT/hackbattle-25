@@ -113,6 +113,7 @@ export default function FaqSection() {
               FAQs
             </h1>
             <Image 
+            loading='lazy'
               src="/question.svg"
               alt="Question Mark"
               width={64}

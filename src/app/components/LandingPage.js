@@ -48,11 +48,11 @@ export default function Home({ onFinish }) {
   
   return (
    
-    <div className="relative select-none min-h-screen overflow-hidden">
+    <div className="relative select-none h-[100dvh] overflow-hidden">
       {/* Background image for desktop */}
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-          <img src="/loader.gif" alt="Loading..." className="w-32 h-32" />
+          <Image src="/loader.webp" alt="Loading..." height={0} width={0} className="w-32 h-32" />
         </div>
       )}
       <Image
@@ -64,15 +64,6 @@ export default function Home({ onFinish }) {
         draggable="false"
       />
 
-      {/* Background image for mobile */}
-      <Image
-        src="/phone-bg.svg"
-        alt="Background"
-        fill
-        className="object-cover md:hidden"
-        priority
-        draggable="false"
-      />
 
       <div className="absolute top-0 left-170 w-64 h-168 hidden md:block overflow-hidden z-0 opacity-60">
         {/* Static Waterfall Background */}
@@ -111,9 +102,10 @@ export default function Home({ onFinish }) {
           {/* Left links */}
           <div className="flex gap-8">
   {[
-    { label: "Home", path: "#home" },
+    { label: "Home" },
     { label: "About", path: "#about" },
     { label: "Problem Statements", path: "#ps" },
+    { label: "Speaker", path: "#speaker" },
     { label: "FAQ", path: "#faqs" }
   ].map(({ label, path }) => (
     <a
@@ -134,7 +126,7 @@ export default function Home({ onFinish }) {
               rel="noopener noreferrer"
               className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
             >
-              <img src="/discord.svg" alt="Discord" className="w-6 h-6" />
+              <Image src="/discord.svg" alt="Discord" height={0} width={0} className="w-6 h-6" />
             </a>
 
             {/* Login Button */}

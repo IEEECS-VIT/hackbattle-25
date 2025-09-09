@@ -38,12 +38,10 @@ const Fireflies = () => {
 export default function FaqSection() {
   
   const [openIndex, setOpenIndex] = useState(null);
-  // UPDATED: The default state now points to the Blaze.webm file
   const [currentCharacter, setCurrentCharacter] = useState({ src: '/Blaze.webm', style: {} }); 
 
   const pathname = usePathname();
 
-  // UPDATED: All character files now point to the .webm format
   const faqData = [
     { question: "What is Hack Battle?", answer: "A gamified hackathon...", headImageSrc: "/minecraft-head-steve.jpeg", characterWebM: "/Steve.webm", characterStyle: { transform: 'translateY(110px) scale(2.0)' } },
     { question: "Do I need Minecraft to join?", answer: "Nope! The theme is...", headImageSrc: "/minecraft-head-alex.jpeg", characterWebM: "/Alex.webm", characterStyle: { transform: 'translateY(100px) translateX(20px) scale(2.0)' } },
@@ -59,7 +57,6 @@ export default function FaqSection() {
       setCurrentCharacter({ src: '/Blaze.webm', style: {} });
     } else {
       setOpenIndex(index);
-      // I've renamed `characterWebM` to `characterSrc` for clarity, but you can keep it as is
       setCurrentCharacter({ 
         src: faqData[index].characterWebM, 
         style: faqData[index].characterStyle || {} 

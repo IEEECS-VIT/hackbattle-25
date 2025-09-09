@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function SpeechBubbleIntro({ onFinish }) {
   const texts = [
-    "Hey Hacker, I \n am Steve!",
+    "Hey Hacker, I am Steve!",
     "There's a Battle Ahead",
     "Are You Ready?",
   ];
@@ -64,7 +64,7 @@ export default function SpeechBubbleIntro({ onFinish }) {
     <div className="relative w-full h-screen overflow-hidden select-none">
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-          <img src="/loader.gif" alt="Loading..." className="w-32 h-32" />
+          <Image src="/loader.webp" height={0} width={0} alt="Loading..." className="w-32 h-32" />
         </div>
       )}
       {/* Background */}
@@ -126,24 +126,21 @@ export default function SpeechBubbleIntro({ onFinish }) {
       {/* Character + Bubble */}
       <div className="absolute top-95 left-1/3 -translate-x-1/2 flex flex-col items-center">
         {/* Bubble above Steve */}
-        <div className="relative mb-4">
-          <div className="relative inline-block translate-x-15">
-            <Image
-              src="/dialogbox-phone.svg"
-              alt="bubble"
-              width={300}
-              height={300}
-              className="relative z-10"
-              draggable="false"
-            />
-            <div className="absolute inset-0 flex bottom-10 items-center justify-center z-30">
-              <p className="text-white text-2xl tracking-wide font-pixeboy text-center px-4 whitespace-pre-line">
-                {texts[currentIndex]}
-              </p>
-            </div>
-          </div>
-        </div>
-
+        <div className="relative inline-block translate-x-15">
+  <Image
+    src="/dialogbox-phone.svg"
+    alt="bubble"
+    width={300}
+    height={300}
+    className="relative z-10"
+    draggable="false"
+  />
+  <div className="absolute top-[5%] left-[10%] w-[80%] h-[60%] flex items-center justify-center">
+    <p className="text-white text-xl tracking-wide font-pixeboy text-center whitespace-pre-line leading-snug">
+      {texts[currentIndex]}
+    </p>
+  </div>
+</div>
         {/* Character */}
         <Image src="/phone-man.svg" alt="character" width={300} height={300} draggable="false" />
       </div>

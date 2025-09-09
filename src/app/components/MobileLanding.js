@@ -20,16 +20,16 @@ export default function LandingPagePhone() {
         className="object-cover"
         draggable={false}
       />
-      {/* Waterfall Background */}
-{/* Waterfall Background */}
-<div className="absolute top-0 left-1/2 -translate-x-1/2 flex items-center w-64 h-[100vh] overflow-hidden z-0 opacity-60">
-  <img
-    src="/video/waterfall.gif"
-    alt="Waterfall"
-    className="w-full h-full object-cover"
-    draggable="false"
-  />
-</div>
+
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex items-center w-64 h-[100vh] overflow-hidden z-0 opacity-60">
+        <Image
+          src="/video/waterfall.gif"
+          alt="Waterfall"
+          fill
+          className="object-cover"
+          draggable={false}
+        />
+      </div>
 
       {/* Top Navbar */}
       <div className="fixed top-0 left-0 right-0 flex justify-between items-center px-6 py-4 z-30">
@@ -83,20 +83,22 @@ export default function LandingPagePhone() {
               { icon: "/icon1.svg", label: "HOME", path: "/" },
               { icon: "/icon2.svg", label: "ABOUT", path: "/#about" },
               { icon: "/icon4.svg", label: "PROBLEM STATEMENTS", path: "/#ps" },
+              { icon: "/icon4.svg", label: "SPEAKER", path: "/#speaker" },
               { icon: "/icon3.svg", label: "FAQs", path: "/#faqs" },
               // { icon: "/icon5.svg", label: "TIMELINE", path: "/timeline" },
             ].map((item, idx) => (
               <button
                 key={idx}
                 onClick={() => {
-                  router.push(item.path)
-                  setMenuOpen(false)   // ✅ close sidebar
+                  router.push(item.path);
+                  setMenuOpen(false); // ✅ close sidebar
                 }}
                 className=" flex items-center w-full"
               >
                 {/* Icon Frame */}
                 <div className="w-24 h-32 bg-[url('/wood-frame.svg')] bg-cover top-20 flex items-center justify-center">
                   <Image
+                    loading="lazy"
                     src={item.icon}
                     alt={item.label}
                     width={96}
@@ -136,6 +138,7 @@ export default function LandingPagePhone() {
           <div className="relative mb-4">
             <div className="relative inline-block translate-x-15">
               <Image
+                loading="lazy"
                 src="/dialogbox-phone.svg"
                 alt="bubble"
                 width={300}
@@ -145,13 +148,16 @@ export default function LandingPagePhone() {
               />
 
               <div className="absolute inset-0 flex items-center bottom-10 justify-center z-30">
-            <Link href="https://gravitas.vit.ac.in/events/e3dd00a8-fc7f-433a-9bfa-3d20c3d5bdd0" target="_blank" rel="noopener noreferrer">
-
-                <button className="hover:scale-110 transition-transform">
-                  <span className="text-5xl tracking-wide text-amber-100 font-pixeboy">
-                    REGISTER
-                  </span>
-                </button>
+                <Link
+                  href="https://gravitas.vit.ac.in/events/e3dd00a8-fc7f-433a-9bfa-3d20c3d5bdd0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button className="hover:scale-110 transition-transform">
+                    <span className="text-5xl tracking-wide text-amber-100 font-pixeboy">
+                      REGISTER
+                    </span>
+                  </button>
                 </Link>
               </div>
             </div>
