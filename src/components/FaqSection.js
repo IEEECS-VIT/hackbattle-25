@@ -50,7 +50,18 @@ const VideoPreloader = ({ sources }) => {
 export default function FaqSection() {
   
   const [openIndex, setOpenIndex] = useState(null);
-  const [currentCharacter, setCurrentCharacter] = useState({ src: '/Blaze.webm', style: {} }); 
+  const [currentCharacter, setCurrentCharacter] = useState({ src: '/Blaze.webm', style: {} });
+  const [displayedCharacter, setDisplayedCharacter] = useState(currentCharacter);
+  useEffect(() => {
+    const video = document.createElement('video');
+    video.src = currentCharacter.src;
+    video.onloadeddata = () => {
+      setDisplayedCharacter(currentCharacter);
+    };
+  }, [currentCharacter]); 
+
+
+
 
   const pathname = usePathname();
 
@@ -69,6 +80,7 @@ export default function FaqSection() {
   const toggleItem = (index) => {
     if (openIndex === index) {
       setOpenIndex(null);
+
       setCurrentCharacter({ src: '/Blaze.webm', style: {} });
     } else {
       setOpenIndex(index);
@@ -105,10 +117,11 @@ export default function FaqSection() {
           
           <div className="hidden md:flex md:w-1/3 md:items-end md:justify-center">
             <div className="w-full mt-35">
+
               <CharacterDisplay 
-                characterSrc={currentCharacter.src} 
-                style={currentCharacter.style}
-                className={currentCharacter.src === '/Blaze.webm' ? 'transform scale-x-[-1]' : ''}
+                characterSrc={displayedCharacter.src} 
+                style={displayedCharacter.style}
+                className={displayedCharacter.src === '/Blaze.webm' ? 'transform scale-x-[-1]' : ''}
               />
             </div>
           </div>
