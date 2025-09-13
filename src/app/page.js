@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import navbar from "./components/navbar";
 import Home from "./components/LandingPage";
 import About from "./components/about";
 import FaqSection from "src/components/FaqSection";
@@ -75,6 +76,7 @@ export default function Page() {
 
       {((isMobile && landingLoaded && speechBubbleComplete) || (!isMobile && landingLoaded)) && (
         <>
+       
           <About />
           <PS />
           <SpeakerSection />

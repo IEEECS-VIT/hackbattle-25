@@ -221,3 +221,24 @@ html {
   /* UPDATED: Increased the glow effect for better visibility */
   text-shadow: 0 0 8px rgba(255, 255, 255, 1), 0 0 12px rgba(255, 255, 255, 0.8);
 }
+@keyframes fly {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-50vw, 10vh) rotate(15deg);
+  }
+  50% {
+    transform: translate(-30vw, -30vh) rotate(-10deg);
+  }
+  75% {
+    transform: translate(40vw, 20vh) rotate(20deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.fly {
+  animation: fly 12s linear infinite;
+}
