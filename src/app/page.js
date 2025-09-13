@@ -8,7 +8,7 @@ import SpeechBubble from "src/app/components/SpeechBubble";
 import PS from "./components/ps";
 import CustomCursor from "./components/Cursor";
 import SpeakerSection from "./components/speaker";
-import Image from "next/image";
+import Marquee from "./components/Marquee";
 
 export default function Page() {
   const [speechBubbleComplete, setSpeechBubbleComplete] = useState(false);
@@ -76,7 +76,9 @@ export default function Page() {
 
       {((isMobile && landingLoaded && speechBubbleComplete) || (!isMobile && landingLoaded)) && (
         <>
-       
+          <div className="absolute -bottom-[5vh] md:-bottom-[10vh] w-full z-10 overflow-x-clip">
+        <Marquee />
+      </div>
           <About />
           <PS />
           <SpeakerSection />

@@ -44,7 +44,7 @@ export default function SpeakerSection() {
 
       {/* Scroll + Overlay Text */}
       <div
-        className={`relative flex items-center justify-center z-20 origin-top transition-all duration-700 ease-in-out
+        className={`relative flex items-center justify-center z-20 origin-top transition-all duration-700 ease-in-out mt-18
           ${animate ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"}
         `}
       >

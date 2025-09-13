@@ -1,4 +1,4 @@
-import Chatbot from "./components/BotSidebar";
+//import Chatbot from "./components/BotSidebar";
 import './globals.css';
 import { Press_Start_2P } from 'next/font/google';
 import { Geist, Geist_Mono } from "next/font/google";
@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={pressStart2P.className}>
         {children}
-       <Chatbot />
+       {/* <Chatbot /> */}
       </body>
     </html>
   );

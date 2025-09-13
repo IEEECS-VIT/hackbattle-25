@@ -84,8 +84,8 @@ const About = () => {
           />
           <h1
             className="absolute left-1/2 -translate-x-1/2
-              -top-[42vw]
-              z-[2]
+            -top-[15vh]
+            z-[2]
               text-[2.5rem] sm:text-[3rem] md:text-[4rem]
               font-bold text-[#f2e5a6] [text-shadow:3px_3px_#3a1d0c] animate-glow-pulse"
           >
