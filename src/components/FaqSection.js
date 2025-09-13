@@ -82,7 +82,7 @@ export default function FaqSection() {
   return (
     <section id="faqs">
       <div
-        className={`relative min-h-screen w-full flex flex-col items-center p-4 bg-[url('/faq-background.svg')] bg-cover bg-center text-white overflow-hidden ${vt323.className}`}
+        className={`relative min-h-screen w-full flex flex-col items-center p-4 bg-[url('/faq-background.webp')] bg-cover bg-center text-white overflow-hidden ${vt323.className}`}
       >
         <VideoPreloader sources={videoSources} />
 

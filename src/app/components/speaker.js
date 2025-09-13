@@ -28,9 +28,19 @@ export default function SpeakerSection() {
       className="relative w-full min-h-screen flex items-center justify-center bg-[url('/speaker.webp')] bg-cover bg-center px-4 md:px-8 lg:px-16"
     >
       {/* Title */}
-      <h2 className="absolute top-6 md:top-10 text-3xl md:text-5xl lg:text-6xl text-[#EFE7A1] font-pixeboy drop-shadow-lg">
+      <h2 className="absolute top-6 md:top-10 text-4xl  md:text-5xl lg:text-6xl text-[#EFE7A1] font-pixeboy drop-shadow-lg">
         SPEAKER
       </h2>
+      <div className="absolute w-60 h-60 md:w-64 md:h-64 lg:w-80 lg:h-80 fly pointer-events-none">
+        <video
+          src="bat.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-contain"
+        />
+      </div>
 
       {/* Scroll + Overlay Text */}
       <div
@@ -43,8 +53,8 @@ export default function SpeakerSection() {
           alt="Patch"
           width={0}
           height={0}
-          sizes="100vw"
-          className="object-contain w-3/4 max-w-sm md:max-w-md lg:max-w-2xl h-auto"
+          sizes="150vw"
+          className="object-contain w-5/4 max-w-sm md:max-w-md lg:max-w-1xl h-auto"
           draggable="false"
         />
 
