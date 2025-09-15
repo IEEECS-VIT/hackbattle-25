@@ -1,4 +1,4 @@
-// import Chatbot from "./components/BotSidebar";
+import Chatbot from "./components/BotSidebar";
 import './globals.css';
 import { Press_Start_2P } from 'next/font/google';
 import Script from "next/script";
@@ -43,6 +43,7 @@ export default function RootLayout({ children }) {
         <SmoothScroll>
           {children}
         </SmoothScroll>
+          <Chatbot />
         <CustomCursor />
       </body>
     </html>
