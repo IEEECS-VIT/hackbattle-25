@@ -7,7 +7,7 @@ import SpeechBubble from "src/app/components/SpeechBubble";
 import PS from "./components/ps";
 import SpeakerSection from "./components/speaker";
 import Marquee from "./components/Marquee";
-
+import Navbar from "./components/Navbar";
 
 export default function Page() {
   const [speechBubbleComplete, setSpeechBubbleComplete] = useState(false);
@@ -57,7 +57,8 @@ export default function Page() {
   }
 
   return (
-    <div>      
+    <div>  
+      <Navbar />    
       {isMobile ? (
         <>
           {!speechBubbleComplete && (

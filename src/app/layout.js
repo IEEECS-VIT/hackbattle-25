@@ -40,10 +40,9 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body className={pressStart2P.className}>
-        <SmoothScroll>
+        {/* <SmoothScroll> */}
           {children}
-        </SmoothScroll>
-          <Chatbot />
+        {/* </SmoothScroll> */}
         <CustomCursor />
       </body>
     </html>
