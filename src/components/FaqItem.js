@@ -35,9 +35,6 @@ export default function FaqItem({ question, answer, headImageSrc, isOpen, toggle
             {question}
           </h2>
         </div>
-        <span className="text-3xl text-[#f2e5a6] [text-shadow:2px_2px_#3a1d0c]">
-          {isOpen ? '-' : '+'}
-        </span>
       </div>
       {isOpen && (
         <p className="text-2xl leading-relaxed text-[#c8d4a6] mt-4 transition-all duration-300 ease-in-out">

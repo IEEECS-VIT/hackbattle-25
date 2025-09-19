@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Phonenavbar from "./Phonenavbar";
 import Link from "next/link";
 
 export default function LandingPagePhone() {
@@ -27,9 +26,6 @@ export default function LandingPagePhone() {
           draggable={false}
         />
       </div>
-
-    
-      <Phonenavbar />
 
       {/* Page Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
@@ -77,12 +73,14 @@ export default function LandingPagePhone() {
 
           {/* Character at the bottom */}
           <Image
-            src="/phone-man.webp"
-            alt="character"
-            width={300}
-            height={300}
-            draggable={false}
-          />
+  src="/phone-man.webp"
+  alt="character"
+  width={300}
+  height={300}
+  className="block max-[389px]:hidden"
+  draggable={false}
+/>
+
         </div>
       </div>
     </div>

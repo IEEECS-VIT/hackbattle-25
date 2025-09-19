@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import MobileLanding from "./MobileLanding";
-import Navbar from "./Navbar";
 import Link from "next/link";
 
 export default function Home({ onFinish }) {
@@ -119,7 +118,6 @@ export default function Home({ onFinish }) {
             draggable="false"
           />
         </div>
-        <Navbar />
         {/* Right vines + leaves */}
         <div className="absolute top-0 right-3 flex z-10">
           <div className="relative flex">
@@ -140,7 +138,7 @@ export default function Home({ onFinish }) {
         </div>
 
         {/* Hero section */}
-        <section className="relative w-[50vw] z-10 flex flex-col items-center text-center mt-10">
+        <section className="relative w-[50vw] z-10 flex flex-col items-center text-center mt-20">
           <div className="z-10 font-pixeboy text-[20vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
             HACK
           </div>
