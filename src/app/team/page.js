@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { leaveTeam, removeMember } from "../api/user/route";
 
 export default function TeamPage() {
   const [isCopied, setIsCopied] = useState(false);
@@ -16,6 +17,14 @@ export default function TeamPage() {
     }
   };
 
+  const handleRemove = async (uid) => {
+    await removeMember(uid);
+  };
+
+  const handleLeave = async () => {
+    await leaveTeam();
+  };
+
   return (
     <main className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* Background */}
@@ -23,10 +32,26 @@ export default function TeamPage() {
         src="/team-info-bg.svg"
         alt="Background"
         fill
-        className="object-cover -z-10 brightness-110 scale-100" 
+        className="object-cover -z-10 brightness-110 scale-100"
         priority
       />
 
+      {/* Example control buttons */}
+      <div className="absolute top-4 right-4 flex gap-3">
+        <button
+          onClick={handleLeave}
+          className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded text-white"
+        >
+          Leave Team
+        </button>
+
+        <button
+          onClick={() => handleRemove("USER_ID_HERE")}
+          className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 rounded text-black"
+        >
+          Remove Member
+        </button>
+      </div>
       {/* Content */}
       <div className="text-center text-white px-4 w-full">
         {/* Title */}
@@ -46,37 +71,37 @@ export default function TeamPage() {
                   title="Copy team code"
                 >
                   {isCopied ? (
-                    <svg 
-                      className="w-4 h-4 text-green-400" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      className="w-4 h-4 text-green-400"
+                      fill="none"
+                      stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M5 13l4 4L19 7" 
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
                       />
                     </svg>
                   ) : (
-                    <svg 
-                      className="w-4 h-4 text-white group-hover:text-pink-300 transition-colors" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      className="w-4 h-4 text-white group-hover:text-pink-300 transition-colors"
+                      fill="none"
+                      stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <rect 
-                        x="9" 
-                        y="9" 
-                        width="13" 
-                        height="13" 
-                        rx="2" 
-                        ry="2" 
+                      <rect
+                        x="9"
+                        y="9"
+                        width="13"
+                        height="13"
+                        rx="2"
+                        ry="2"
                         strokeWidth="2"
                       />
-                      <path 
-                        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" 
+                      <path
+                        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
                         strokeWidth="2"
                       />
                     </svg>
@@ -89,8 +114,18 @@ export default function TeamPage() {
             {isCopied && (
               <div className="fixed top-4 right-4 z-50 animate-bounce">
                 <div className="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                   <span className="text-sm font-medium">Team code copied!</span>
                 </div>
@@ -204,7 +239,6 @@ export default function TeamPage() {
         <div className="hidden sm:block relative w-full max-w-[1200px] mx-auto">
           {/* Responsive container with proper aspect ratio */}
           <div className="relative w-full h-[60vh] sm:h-[70vh] md:h-[75vh] lg:h-[80vh] min-h-[500px]">
-            
             {/* Center Team Leader */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
               {/* Leader Text Box - Above the purple object */}
@@ -231,10 +265,12 @@ export default function TeamPage() {
             </div>
 
             {/* Left Side - Top Member */}
-            <div className="absolute 
+            <div
+              className="absolute 
             top-[52%] sm:top-[42%] md:top-[38%] lg:top-[35.3%] 
             left-[16%] sm:left-[22%] md:left-[28%] lg:left-[26%] 
-            ">
+            "
+            >
               <div className="relative mt-1 sm:mt-2">
                 <Image
                   src="/text-box-team.svg"
@@ -244,7 +280,7 @@ export default function TeamPage() {
                   className="w-36 sm:w-40 md:w-44 lg:w-44 xl:w-50 h-auto"
                 />
                 <p className="absolute inset-0 flex items-center justify-center text-xs sm:text-sm md:text-base">
-                   NAME DESIGNATION
+                  NAME DESIGNATION
                 </p>
               </div>
               <Image
@@ -257,11 +293,13 @@ export default function TeamPage() {
             </div>
 
             {/* Left Side - Bottom Member */}
-            <div className="absolute 
+            <div
+              className="absolute 
             top-[68%] sm:top-[58%] md:top-[44%] lg:top-[51.3%] 
             left-[0%] sm:left-[10%] md:left-[8%] lg:left-[10%]  
             flex flex-col items-center 
-            ">
+            "
+            >
               <div className="relative mt-1 sm:mt-2">
                 <Image
                   src="/text-box-team.svg"
@@ -284,11 +322,13 @@ export default function TeamPage() {
             </div>
 
             {/* Right Side - Top Member */}
-            <div className="absolute 
+            <div
+              className="absolute 
             top-[52%] sm:top-[58%] md:top-[44%] lg:top-[35.3%] 
             left-[66%] sm:left-[80%] md:left-[75%] lg:left-[58%]  
             flex flex-col items-center 
-            ">
+            "
+            >
               <div className="relative mt-1 sm:mt-2">
                 <Image
                   src="/text-box-team.svg"
@@ -311,10 +351,12 @@ export default function TeamPage() {
             </div>
 
             {/* Right Side - Bottom Member */}
-            <div className="absolute 
+            <div
+              className="absolute 
             top-[68%] sm:top-[58%] md:top-[44%] lg:top-[51.3%] 
             left-[80%] sm:left-[80%] md:left-[8%] lg:left-[73%] 
-            flex flex-col items-center">
+            flex flex-col items-center"
+            >
               <div className="relative mb-1 sm:mb-2">
                 <Image
                   src="/text-box-team.svg"
@@ -324,7 +366,7 @@ export default function TeamPage() {
                   className="w-36 sm:w-40 md:w-44 lg:w-44 xl:w-50 h-auto"
                 />
                 <p className="absolute inset-0 flex items-center justify-center text-xs sm:text-sm md:text-base">
-                  NAME DESIGNATION 
+                  NAME DESIGNATION
                 </p>
               </div>
               <Image
