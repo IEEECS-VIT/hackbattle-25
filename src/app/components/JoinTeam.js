@@ -2,8 +2,10 @@
 
 import React,{ useState, useEffect } from 'react';
 import Image from 'next/image';
+import { createTeam, joinTeam } from '../api/team';
+import Toast from './Toast';
+import { useRouter } from 'next/navigation';
 
-// --- Snowflakes Component ---
 const Snowflakes = () => {
   const [snowflakes, setSnowflakes] = useState([]);
 
@@ -72,12 +74,35 @@ const Modal = ({ title, inputLabel, buttonText, onClose, onSubmit }) => {
 // --- Main Join Team Component ---
 export default function JoinTeam() {
   const [modal, setModal] = useState(null); // 'join', 'create', or null
+  const router=useRouter();
 
-  const handleJoinTeam = (code) => {
+  const handleJoinTeam = async(code) => {
     console.log("Joining team with code:", code);
+    const result=await joinTeam(code);
+    if(result.status==204){
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Invalid Team Code" } }));
+    }else if(result.status==200){
+      localStorage.setItem("UserStatus", "true");
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Team Joined Successfullt" } }));
+      router.push("/team");
+    }else if(result.status==208){
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Team has the maximum number of members allowed." } }));
+    }else if(result.status==201){
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "You are already in a team." } }));
+    }
   };
 
-  const handleCreateTeam = (name) => {
+  const handleCreateTeam = async(name) => {
+    const result=await createTeam(name);
+    if(result.status==208){
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Team name already taken" } }));
+    }else if(result.status==201){
+      localStorage.setItem("UserStatus", "true");
+      console.log('team created successfully');
+      window.location.href="/team";
+    }else if(result.status==200){
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "You are already in a team." } }));
+    }
     console.log("Creating team with name:", name);
   };
   
@@ -87,8 +112,16 @@ export default function JoinTeam() {
   };
 
   return (
-    // UPDATED: Changed back to `bg-cover` to fill the screen
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 bg-[url('/your-background.svg')] bg-cover bg-center text-white font-pixeboy">
+<div className="relative h-screen w-screen flex flex-col items-center justify-center p-4 text-white font-pixeboy overflow-hidden">
+  <Toast />
+  <Image
+    src="/create-join.svg"
+    alt="Background"
+    fill
+    className="w-screen h-screen object-fill -z-10"
+    priority
+    draggable="false"
+  />
       
       <Snowflakes />
       

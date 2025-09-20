@@ -1,11 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import MinecraftTimer from "./Timer";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LandingPagePhone() {
+  const [user, setUser] = useState(null);
+  const [userStatus, setUserStatus] = useState(null);
+  const router=useRouter();
+  
+  useEffect(() => {
+      const status = localStorage.getItem("UserStatus");
+      if (status === "true" || status === "false") setUserStatus(status);
+    }, []);
+    const handleRedirect = () => {
+      if (userStatus === "true") {
+        router.push("/team");
+      } else if (userStatus === "false") {
+        router.push("/dashboard");
+      }
+    };
   return (
-    <div className="relative h-[100dvh] w-full overflow-hidden text-white font-pixeboy select-none">
+    <div className="relative h-[100dvh] w-full overflow-hidden text-white font-pixeboy select-none" id="home">
       {/* Background */}
       <Image
         src="/landing-bg.webp"
@@ -16,72 +33,57 @@ export default function LandingPagePhone() {
         draggable={false}
       />
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex items-center w-64 h-[100vh] overflow-hidden z-0 opacity-60">
+      {/* Waterfall */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex items-center w-64 h-full overflow-hidden z-0 opacity-60">
         <Image
           src="/waterfall.gif"
           alt="Waterfall"
-          height={0}
-          width={0}
-          className="w-100 h-210 object-cover"
+          fill
+          className="object-cover"
           draggable={false}
         />
       </div>
 
       {/* Page Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-        <section className="relative z-10 flex flex-col items-center justify-center text-center font-pixeboy -mt-[60vh]">
-          <div className="text-8xl bg-clip-text [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
+      <div className="relative z-10 flex flex-col items-center justify-between h-full text-center">
+        {/* Heading */}
+        <section className="flex flex-col items-center font-pixeboy mt-6">
+          <div className="text-8xl [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
             Hack
           </div>
-          <div className="text-8xl bg-clip-text -mt-15 [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
+          <div className="text-8xl -mt-4 [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
             BATTLE
           </div>
-          <div className="text-4xl mt-4">JOIN THE ULTIMATE</div>
-          <div className="text-4xl -mt-2">36 hour HACKATHON</div>
+          <div className="text-4xl mt-2">THE ULTIMATE</div>
+          <div className="text-4xl -mt-1">36 hour HACKATHON</div>
         </section>
 
-        {/* Character and Bubble container */}
-        <div className="absolute top-95 left-1/3 -translate-x-1/2 flex flex-col items-center">
-          {/* Bubble above Steve */}
-          <div className="relative mb-4">
-            <div className="relative inline-block translate-x-15">
-              <Image
-                loading="lazy"
-                src="/dialogbox-phone.webp"
-                alt="bubble"
-                width={300}
-                height={300}
-                className="relative z-10"
-                draggable={false}
-              />
-
-              <div className="absolute inset-0 flex items-center bottom-10 justify-center z-30">
-                <Link
-                  href="https://gravitas.vit.ac.in/events/e3dd00a8-fc7f-433a-9bfa-3d20c3d5bdd0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button className="hover:scale-110 transition-transform">
-                    <span className="text-5xl tracking-wide text-amber-100 font-pixeboy">
-                      REGISTER
-                    </span>
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Character at the bottom */}
-          <Image
-  src="/phone-man.webp"
-  alt="character"
-  width={300}
-  height={300}
-  className="block max-[389px]:hidden"
-  draggable={false}
-/>
-
+        {/* Timer */}
+        <div className="flex justify-center h-[15vh]">
+          <MinecraftTimer />
         </div>
+        {user && (
+            <button
+            onClick={handleRedirect}
+            className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700 transition"
+          >
+            {userStatus ? "Go to Team Page" : "Go to Dashboard"}
+          </button>
+          )}
+
+        <div className="relative w-full flex justify-start items-end">
+  <Image
+    src="/phone-man.webp"
+    alt="character"
+    height={0}
+    width={0}
+    sizes="100vh"
+    className="h-[40vh] w-auto object-contain"
+    draggable={false}
+  />
+</div>
+
+
       </div>
     </div>
   );

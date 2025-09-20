@@ -1,7 +1,6 @@
-"use client";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { verifyToken } from "../api/user/route";
+import { checkStatus } from "../api/user";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,50 +15,55 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
-  hd: "vitstudent.ac.in",
-  prompt: "select_account",
-});
-
-async function getUserContext(accessToken) {
+async function getUserContext(accessToken, router) {
   try {
-    const res = await verifyToken(accessToken);
+    const res = await checkStatus(accessToken);
+    console.log("res", res);
 
-    const userStatus = res.data.status;
-    localStorage.setItem("UserStatus", userStatus);
-    localStorage.setItem("AccessToken", accessToken);
+    if (res.status === 204) {
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "User is not registered" } }));
+      return;
+    } else {
+      const userStatus = res.data?.isInTeam;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("UserStatus", userStatus);
 
-    if (userStatus === 0) {
-      window.location.href = "/dashboard";
-    } else if (userStatus === 1) {
-      window.location.href = "/team";
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Login successful" } }));
+
+      if (userStatus) {
+        router.push("/team");
+      } else {
+        router.push("/dashboard");
+      }
+      return;
     }
   } catch (error) {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("AccessToken");
-      localStorage.removeItem("UserStatus");
-    } else if (error.response?.status === 404) {
-      localStorage.removeItem("AccessToken");
-      localStorage.removeItem("UserStatus");
-    }
     console.error("Error verifying token:", error);
+    window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Something went wrong" } }));
   }
 }
 
-export async function loginWithGoogle() {
+export async function loginWithGoogle(type, router) {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
+
+  if (type === "internal") {
+    provider.setCustomParameters({ hd: "vitstudent.ac.in" });
+  }
+
   const result = await signInWithPopup(auth, provider);
-  const credential = GoogleAuthProvider.credentialFromResult(result);
-  if (!credential) throw new Error("No credentials found");
 
-  const accessToken = credential.accessToken;
-  await getUserContext(accessToken);
+  if (type === "internal" && !result.user.email.endsWith("@vitstudent.ac.in")) {
+    window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "You must use a @vitstudent.ac.in email" } }));
+    return;
+  }
 
-  return result.user;
+  await getUserContext(result.user.accessToken, router);
 }
+
 
 export async function logout() {
   await signOut(auth);
-  localStorage.removeItem("AccessToken");
+  localStorage.removeItem("accessToken");
   localStorage.removeItem("UserStatus");
 }

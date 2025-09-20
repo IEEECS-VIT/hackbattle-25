@@ -58,7 +58,7 @@ export default function Page() {
 
   return (
     <div>  
-      <Navbar />    
+      {!(isMobile && !speechBubbleComplete) && <Navbar />}  
       {isMobile ? (
         <>
           {!speechBubbleComplete && (
