@@ -112,26 +112,25 @@ export default function JoinTeam() {
   };
 
   return (
-<div className="relative h-screen w-screen flex flex-col items-center justify-center p-4 text-white font-pixeboy overflow-hidden">
-  <Toast />
-  <Image
-    src="/create-join.svg"
-    alt="Background"
-    fill
-    className="w-screen h-screen object-fill -z-10"
-    priority
-    draggable="false"
-  />
-      
+    <div className="relative h-screen w-screen flex flex-col items-center justify-center p-4 text-white font-pixeboy overflow-hidden">
+      <Toast />
+      <Image
+        src="/create-join.svg"
+        alt="Background"
+        fill
+        className="object-cover"
+        priority
+        draggable={false}
+      />
+
       <Snowflakes />
-      
+
       <div className="flex flex-col md:flex-row items-center gap-16 md:gap-24 z-10">
-        
-        <div 
+        <div
           className="cursor-pointer group"
           onClick={() => {
             playSound();
-            setModal('create');
+            setModal("create");
           }}
         >
           <Image
@@ -143,11 +142,11 @@ export default function JoinTeam() {
           />
         </div>
 
-        <div 
+        <div
           className="cursor-pointer group"
           onClick={() => {
             playSound();
-            setModal('join');
+            setModal("join");
           }}
         >
           <Image
@@ -160,7 +159,7 @@ export default function JoinTeam() {
         </div>
       </div>
 
-      {modal === 'create' && (
+      {modal === "create" && (
         <Modal
           title="Create a New Team"
           inputLabel="Enter your team name..."
@@ -169,7 +168,7 @@ export default function JoinTeam() {
           onSubmit={handleCreateTeam}
         />
       )}
-      {modal === 'join' && (
+      {modal === "join" && (
         <Modal
           title="Join an Existing Team"
           inputLabel="Enter the team code..."
@@ -178,7 +177,6 @@ export default function JoinTeam() {
           onSubmit={handleJoinTeam}
         />
       )}
-
     </div>
   );
 }

@@ -9,7 +9,14 @@ export default function LandingPagePhone() {
   const [user, setUser] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
   const router=useRouter();
-  
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user"); 
+    if (storedUser) setUser(JSON.parse(storedUser));
+
+    const status = localStorage.getItem("UserStatus");
+    if (status === "true" || status === "false") setUserStatus(status);
+  }, []);
+
   useEffect(() => {
       const status = localStorage.getItem("UserStatus");
       if (status === "true" || status === "false") setUserStatus(status);
@@ -61,6 +68,7 @@ export default function LandingPagePhone() {
         {/* Timer */}
         <div className="flex justify-center h-[15vh]">
           <MinecraftTimer />
+          
         </div>
         {user && (
             <button
