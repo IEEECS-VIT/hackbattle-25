@@ -15,7 +15,7 @@ const About = () => {
 
       {/* Desktop layout */}
       <div className="hidden md:flex w-full h-full bg-[url('/about.webp')] bg-center bg-cover items-center justify-center relative">
-        <div className="relative w-[47vw] h-[72vh] rounded-[22px] bg-[url('/about-box-bg.svg')] bg-center bg-[length:100%_auto]">
+        <div className="relative w-[47vw] h-[72vh] rounded-[22px] bg-center bg-[length:100%_auto]">
           <Image
           loading='lazy'
             src="/about-marble.webp"

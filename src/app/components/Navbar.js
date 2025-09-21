@@ -100,12 +100,12 @@ export default function Navbar() {
             <Image src="/discord.webp" alt="Discord" height={24} width={24} />
           </a>
 
-          <button
+          {/* <button
             onClick={user ? handleLogout : handleLogin}
             className="px-5 py-2 bg-yellow-500 text-black text-xl lg:text-2xl rounded-full hover:bg-yellow-400"
           >
             {user ? "LOGOUT" : "LOGIN"}
-          </button>
+          </button> */}
         </div>
       </nav>
 
@@ -116,12 +116,12 @@ export default function Navbar() {
             ☰
           </button>
 
-          <button
+          {/* <button
             onClick={user ? handleLogout : handleLogin}
             className="bg-yellow-500 text-black px-4 py-2 rounded-full text-2xl font-pixeboy"
           >
             {user ? "LOGOUT" : "LOGIN"}
-          </button>
+          </button> */}
         </div>
 
         {menuOpen && (
@@ -132,7 +132,7 @@ export default function Navbar() {
         )}
 
 {menuOpen && (
-  <div className="fixed top-0 left-0 h-[100dvh] w-[100vw] z-40 transform transition-transform duration-300">
+  <div className="fixed top-0 left-0 h-[100dvh] w-[100vw] z-40">
     {/* Borders */}
     <div className="absolute inset-0 z-50 pointer-events-none flex justify-between">
       <div className="h-full w-8 bg-[url('/border.webp')] bg-repeat-y bg-left bg-contain"></div>
@@ -177,7 +177,7 @@ export default function Navbar() {
       />
     </div>
 
-    <div className="flex-1 h-16 bg-[url('/wood-button.webp')] bg-cover flex items-center justify-center text-amber-100 font-pixeboy text-3xl">
+    <div className="flex-1 h-16 bg-[url('/wood-button.webp')] bg-cover flex items-center justify-center text-amber-100 font-pixeboy text-2xl">
       {item.label}
     </div>
   </button>

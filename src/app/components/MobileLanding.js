@@ -62,14 +62,14 @@ export default function LandingPagePhone() {
         <div className="flex justify-center h-[15vh]">
           <MinecraftTimer />
         </div>
-        {user && (
+        {/* {user && (
             <button
             onClick={handleRedirect}
             className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700 transition"
           >
             {userStatus ? "Go to Team Page" : "Go to Dashboard"}
           </button>
-          )}
+          )} */}
 
         <div className="relative w-full flex justify-start items-end">
   <Image

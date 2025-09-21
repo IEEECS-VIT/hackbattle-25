@@ -171,14 +171,14 @@ export default function Home({ onFinish }) {
             <MinecraftTimer />
           </div>
 
-            {user && (
+            {/* {user && (
             <button
             onClick={handleRedirect}
-            className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700 transition"
+            className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700"
           >
             {userStatus ? "Go to Team Page" : "Go to Dashboard"}
           </button>
-          )}
+          )} */}
         </section>
 
         {/* Characters */}

@@ -5,7 +5,7 @@ export default function(){
     return(
         <div>
             <CustomCursor />
-            <JoinTeam />
+            {/* <JoinTeam /> */}
         </div>
     )
 }
