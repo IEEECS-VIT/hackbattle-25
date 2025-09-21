@@ -2,12 +2,20 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import MobileLanding from "./MobileLanding";
-import Link from "next/link";
 import MinecraftTimer from "./Timer";
+import { useRouter } from "next/navigation";
 
 export default function Home({ onFinish }) {
   const [loading, setLoading] = useState(true); // tracks asset loading
   const [forcePlayOnce, setForcePlayOnce] = useState(true); // ensures video plays once
+  const [user, setUser] = useState(null);
+  const [userStatus, setUserStatus] = useState(null);
+  const router=useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) setUser(token);
+  }, []);
 
   useEffect(() => {
     const assets = [
@@ -39,29 +47,32 @@ export default function Home({ onFinish }) {
     });
   }, [onFinish]);
 
-  const handleVideoEnd = () => {
-    if (!loading) {
-      setForcePlayOnce(false);
+  useEffect(() => {
+    const status = localStorage.getItem("UserStatus");
+    if (status === "true" || status === "false") setUserStatus(status);
+  }, []);
+  
+  const handleRedirect = () => {
+    if (userStatus === "true") {
+      router.push("/team");
+    } else if (userStatus === "false") {
+      router.push("/dashboard");
     }
   };
-
-  const showSplash = loading || forcePlayOnce;
-
+  
   return (
     <div className="relative select-none h-[100dvh] overflow-hidden" id="home">
-      {showSplash && (
-        <div className="fixed inset-0 z-50">
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
           <video
-  src="mojang.mp4"
-  autoPlay
-  muted
-  playsInline
-  onEnded={handleVideoEnd}
-  loop={loading}
-  className="absolute top-0 left-0 w-full h-full object-contain md:object-cover bg-[#db1f26]"
-  style={{ objectPosition: "center" }}
-/>
-
+            src="/loader.webm"
+            alt="Loading..."
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-32 h-32"
+          />
         </div>
       )}
 
@@ -139,24 +150,35 @@ export default function Home({ onFinish }) {
         </div>
 
         {/* Hero section */}
-        <section className="relative w-[50vw] z-10 flex flex-col items-center text-center mt-20">
+        <section className="relative w-[50vw] z-10 flex flex-col items-center text-center mt-32">
           <div className="z-10 font-pixeboy text-[16vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
-            HACK
+            HACKBATTLE
           </div>
-          <div className="z-10 font-pixeboy text-[16vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
+          {/* <div className="z-10 font-pixeboy text-[12vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
             BATTLE
+          </div> */}
+          <div className="z-10 text-[5vh] font-pixeboy mt-8 animate-glow-pulse">
+            THE ULTIMATE 36 hour Hackathon
           </div>
-          <div className="z-10 font-pixeboy text-6xl mt-4 animate-glow-pulse">
-            THE ULTIMATE
+          <div className="z-10 text-[5vh] font-pixeboy mt-0 animate-glow-pulse">
+            starts in ...
           </div>
-          <div className="z-10 font-pixeboy text-6xl mt-2 animate-glow-pulse">
-            36 hour Hackathon
-          </div>
+          {/* <div className="z-10 font-pixeboy text-6xl mt-2 animate-glow-pulse">
+            
+          </div> */}
 
-          {/* Register button */}
           <div className="relative b mt-6">
             <MinecraftTimer />
           </div>
+
+            {user && (
+            <button
+            onClick={handleRedirect}
+            className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700 transition"
+          >
+            {userStatus ? "Go to Team Page" : "Go to Dashboard"}
+          </button>
+          )}
         </section>
 
         {/* Characters */}

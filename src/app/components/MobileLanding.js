@@ -2,8 +2,25 @@
 
 import Image from "next/image";
 import MinecraftTimer from "./Timer";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LandingPagePhone() {
+  const [user, setUser] = useState(null);
+  const [userStatus, setUserStatus] = useState(null);
+  const router=useRouter();
+  
+  useEffect(() => {
+      const status = localStorage.getItem("UserStatus");
+      if (status === "true" || status === "false") setUserStatus(status);
+    }, []);
+    const handleRedirect = () => {
+      if (userStatus === "true") {
+        router.push("/team");
+      } else if (userStatus === "false") {
+        router.push("/dashboard");
+      }
+    };
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden text-white font-pixeboy select-none" id="home">
       {/* Background */}
@@ -45,6 +62,14 @@ export default function LandingPagePhone() {
         <div className="flex justify-center h-[15vh]">
           <MinecraftTimer />
         </div>
+        {user && (
+            <button
+            onClick={handleRedirect}
+            className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700 transition"
+          >
+            {userStatus ? "Go to Team Page" : "Go to Dashboard"}
+          </button>
+          )}
 
         <div className="relative w-full flex justify-start items-end">
   <Image

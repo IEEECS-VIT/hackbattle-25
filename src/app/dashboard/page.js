@@ -4,7 +4,8 @@ import CustomCursor from "../components/Cursor";
 export default function(){
     return(
         <div>
-            {/* <JoinTeam /> */}
+            <CustomCursor />
+            <JoinTeam />
         </div>
     )
 }
