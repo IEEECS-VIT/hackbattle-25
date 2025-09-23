@@ -109,7 +109,7 @@ export default function SubmissionPage() {
   return (
     <div
       className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black bg-cover bg-center px-4"
-      style={{ backgroundImage: "url('/bgm.png')" }}
+      style={{ backgroundImage: "url('/bgm.webp')" }}
     >
       <Toast />
       {/* Ghosts scale down on mobile */}

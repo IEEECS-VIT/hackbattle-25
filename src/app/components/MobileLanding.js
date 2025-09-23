@@ -73,16 +73,15 @@ export default function LandingPagePhone() {
                     <div className="leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse mt-4">
             presents
           </div>
-          <div className="text-8xl [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
+          <div className="text-7xl [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
             Hack
           </div>
-          <div className="text-8xl -mt-8 [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
+          <div className="text-7xl -mt-8 [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
             BATTLE
           </div>
           
 
         </section>
-
           <MinecraftTimer />
         {/* <div className="relative w-full flex justify-start items-end">
           <Image

@@ -43,7 +43,7 @@ export default function ProblemStatements() {
   return (
     <div id="ps" className="relative flex flex-col h-[80vh] lg:h-screen w-full text-center items-center">
       <Image
-        src="/ps.svg"
+        src="/ps.webp"
         alt="Background"
         fill
         className="object-cover -z-10"

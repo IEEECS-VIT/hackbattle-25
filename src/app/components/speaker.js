@@ -81,7 +81,7 @@ export default function SpeakerSection() {
           alt="Patch"
           width={1000}
           height={1000}
-          className="object-contain w-3/4 lg:max-w-2xl"
+          className="object-contain w-3/4 lg:max-w-2xl h-[90vh]"
           draggable="false"
         />
 
