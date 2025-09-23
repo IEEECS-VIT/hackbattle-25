@@ -4,6 +4,7 @@ import { Press_Start_2P } from 'next/font/google';
 import Script from "next/script";
 import SmoothScroll from "./SmoothScroll.js";
 import CustomCursor from './components/Cursor';
+import Toast from "./components/Toast";
 
 export const metadata = { 
   title: 'HackBattle 2025', 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={pressStart2P.className}>
         {/* <SmoothScroll> */}
+        <Toast />
           {children}
         {/* </SmoothScroll> */}
         <CustomCursor />

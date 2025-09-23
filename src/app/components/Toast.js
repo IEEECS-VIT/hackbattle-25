@@ -30,7 +30,7 @@ export default function Toast() {
   if (!visible || !text) return null
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] transition-opacity duration-300 min-w-84">
+    <div className="fixed bottom-6 right-6 z-[9999] transition-opacity duration-300 min-w-48 md:min-w-84">
       <div className="bg-[#d9c29c] text-center text-black px-6 py-4 rounded-none border-4 border-[#5a4632] shadow-lg font-[Karma] text-lg relative font-pixeboy">
         {text}
 

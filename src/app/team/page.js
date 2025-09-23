@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { teamDetails } from "../api/team";
+import { teamDetails, leaveTeam } from "../api/team";
 import { useRouter } from "next/navigation";
 import Toast from "../components/Toast";
 
 export default function TeamPage() {
   const [team, setTeam] = useState(null);
-
+  const [loading, setLoading]=useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const router = useRouter();
 
@@ -15,8 +15,11 @@ export default function TeamPage() {
     const getTeamDetails = async () => {
       try {
         const result = await teamDetails();
+        console.log(result, "res");
+        if(result.status == 204) {
+          router.push("/dashboard");
+        }
         setTeam(result.data);
-        localStorage.setItem("teamDetails", JSON.stringify(result.data));
       } catch (err) {
         console.error(err);
       }
@@ -24,6 +27,25 @@ export default function TeamPage() {
     getTeamDetails();
   }, []);
 
+  const handleLeaveTeam = async () => {
+    try {
+      setLoading(true);
+      await leaveTeam();
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Left team successfully." },
+        })
+      );
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    } catch (err) {
+      console.error("Error leaving team:", err);
+      setToastMessage("Failed to leave team");
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleCopyCode = async () => {
     if (!team) return;
     try {
@@ -68,6 +90,21 @@ export default function TeamPage() {
 
   return (
     <>
+    {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+          <video
+            src="/loader.webm"
+            autoPlay
+            loop
+            muted
+            playsInline
+            height={0}
+            width={0}
+            alt="Loading..."
+            className="w-32 h-32"
+          />
+        </div>
+      )}
     <div className="pointer-events-none fixed top-16 right-4 md:top-8 md:right-6 lg:top-10 lg:right-8 z-10">
     <Image
       src="/dragon.webp"
@@ -98,14 +135,20 @@ export default function TeamPage() {
           <div className="w-0 h-0 border-t-[12px] border-b-[12px] border-r-[16px] border-t-transparent border-b-transparent border-r-white ml-1"></div>
         </button>
 
-        <button
-          onClick={handleSubmissionClick}
-          className={`px-6 py-3 rounded-lg shadow-lg text-white font-semibold transition-colors ${
-            "bg-pink-500/70 hover:bg-pink-500/90"
-          }`}
-        >
-          Submission
-        </button>
+        <div className="flex flex-row gap-4 text-[1vh] md:text-[2vh]">
+          <button
+            onClick={handleLeaveTeam}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg"
+          >
+            Leave Team
+          </button>
+          <button
+            onClick={handleSubmissionClick}
+            className={`px-6 py-3 rounded-lg shadow-lg text-white font-semibold transition-colors ${"bg-pink-500/70 hover:bg-pink-500/90"}`}
+          >
+            Submission
+          </button>
+        </div>
       </div>
 
 

@@ -15,3 +15,7 @@ export const teamDetails = async () => {
 export const submitProject = async (projectData) => {
   return apiClient.post("/teams/project/submit", projectData);
 }
+
+export const leaveTeam = async () => {
+  return apiClient.delete("/teams/leave-team");
+};
