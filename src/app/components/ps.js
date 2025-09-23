@@ -55,7 +55,7 @@ export default function ProblemStatements() {
         PROBLEM STATEMENTS
       </h1>
 
-      <div className="flex flex-col md:flex-row w-[80vw] md:w-[60vw] gap-y-[1vh] gap-x-[2vw] md:gap-y-0 h-[60vh] md:h-[80vh] overflow-hidden relative z-10">
+      <div className="flex flex-col md:flex-row w-[80vw] md:w-[60vw] gap-y-[1vh] gap-x-[2vw] md:gap-y-0 h-[90vh] md:h-[80vh] overflow-hidden relative z-10">
         {statements.map((s, i) => (
           <div
             key={i}
