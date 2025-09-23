@@ -184,14 +184,17 @@ export default function Home({ onFinish }) {
             <MinecraftTimer />
           </div>
 
-            {/* {user && (
+            {user && (
+            <div className="w-[50vw] ml-[12vw] mt-[2vh] flex justify-start">
             <button
-            onClick={handleRedirect}
-            className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700"
-          >
-            {userStatus ? "Go to Team Page" : "Go to Dashboard"}
-          </button>
-          )} */}
+              onClick={handleRedirect}
+              className="px-6 py-3 bg-yellow-600 text-white font-pixeboy text-xl rounded-md hover:bg-yellow-700"
+            >
+              {userStatus ? "Go to Team Page" : "Go to Dashboard"}
+            </button>
+          </div>
+          
+          )}
         </section>
 
         {/* Characters */}

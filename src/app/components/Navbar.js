@@ -73,7 +73,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
-      <nav className="hidden md:flex fixed top-3 left-1/2 -translate-x-1/2 items-center justify-center gap-8 px-8 py-4 bg-[#02554ACC] rounded-full shadow-lg z-30 w-[70vw]">
+      <nav className="hidden md:flex fixed top-3 left-1/2 -translate-x-1/2 items-center justify-center gap-8 px-8 py-4 bg-[#02554ACC] rounded-full shadow-lg z-30 w-[80vw]">
         <div className="flex gap-8">
           {[
             { label: "Home", path: "#home" },
@@ -101,12 +101,12 @@ export default function Navbar() {
             <Image src="/discord.webp" alt="Discord" height={24} width={24} />
           </Link>
 
-          {/* <button
+          <button
             onClick={user ? handleLogout : handleLogin}
             className="px-5 py-2 bg-yellow-500 text-black text-xl lg:text-2xl rounded-full hover:bg-yellow-400"
           >
             {user ? "LOGOUT" : "LOGIN"}
-          </button> */}
+          </button>
         </div>
       </nav>
 
@@ -120,12 +120,12 @@ export default function Navbar() {
             </button>
           </div>
           <div className="flex items-center gap-4">
-            {/* <button
+            <button
               onClick={user ? handleLogout : handleLogin}
               className="bg-yellow-500 text-black px-4 py-2 rounded-full text-2xl font-pixeboy"
             >
               {user ? "LOGOUT" : "LOGIN"}
-            </button> */}
+            </button>
             <Link
               href="https://discord.gg/Qj2qyYQXBF"
               target="_blank"
