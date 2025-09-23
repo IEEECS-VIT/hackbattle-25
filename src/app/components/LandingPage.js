@@ -188,7 +188,7 @@ export default function Home({ onFinish }) {
             <div className="w-[50vw] ml-[12vw] mt-[2vh] flex justify-start">
             <button
               onClick={handleRedirect}
-              className="px-6 py-3 bg-yellow-600 text-white font-pixeboy text-xl rounded-md hover:bg-yellow-700"
+              className="px-6 py-3 bg-[#d5b895] text-black font-pixeboy rounded-md hover:bg-[#a67a5b] hover:text-white text-[4vh]"
             >
               {userStatus=="true" ? "Go to Team Page" : "Go to Dashboard"}
             </button>

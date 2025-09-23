@@ -119,12 +119,15 @@ export default function JoinTeam() {
   }, []);
 
   const handleJoinTeam = async (code) => {
+    setLoading(true);
     const result = await joinTeam(code);
     if (result.status == 204) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", { detail: { text: "Invalid Team Code" } })
       );
     } else if (result.status == 200) {
+    setLoading(false);
       localStorage.setItem("UserStatus", "true");
       window.dispatchEvent(
         new CustomEvent("showToast", {
@@ -133,12 +136,14 @@ export default function JoinTeam() {
       );
       router.push("/team");
     } else if (result.status == 208) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "Team has the maximum number of members allowed." },
         })
       );
     } else if (result.status == 201) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "You are already in a team." },
@@ -148,17 +153,22 @@ export default function JoinTeam() {
   };
 
   const handleCreateTeam = async (name) => {
+    setLoading(true);
+
     const result = await createTeam(name);
     if (result.status == 208) {
+    setLoading(true);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "Team name already taken" },
         })
       );
     } else if (result.status == 201) {
+    setLoading(false);
       localStorage.setItem("UserStatus", "true");
       window.location.href = "/team";
     } else if (result.status == 200) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "You are already in a team." },
