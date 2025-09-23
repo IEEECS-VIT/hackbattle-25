@@ -52,14 +52,6 @@ export default function Home({ onFinish }) {
     setUserStatus(status);
   }, []);
 
-  const handleRedirect = () => {
-    if (userStatus === "true") {
-      router.push("/team");
-    } else if (userStatus === "false") {
-      router.push("/dashboard");
-    }
-  };
-
   return (
     <div className="relative select-none h-[100dvh] overflow-hidden" id="home">
       {loading && (
@@ -167,12 +159,7 @@ export default function Home({ onFinish }) {
           <div className="z-10 font-pixeboy text-[16vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
             HACKBATTLE
           </div>
-          <div className="z-10 text-[5vh] font-pixeboy mt-8 animate-glow-pulse">
-            THE ULTIMATE 36 hour Hackathon
-          </div>
-          <div className="z-10 text-[5vh] font-pixeboy mt-0 animate-glow-pulse">
-            starts in ...
-          </div>
+          
 
           <div className="relative b mt-6">
             <MinecraftTimer />

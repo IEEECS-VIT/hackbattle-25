@@ -12,10 +12,24 @@ export default function Navbar() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const [userStatus, setUserStatus] = useState(null);
+
+  const handleRedirect = () => {
+    if (userStatus === "true") {
+      router.push("/team");
+    } else if (userStatus === "false") {
+      router.push("/dashboard");
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) setUser(token);
+  }, []);
+
+  useEffect(() => {
+    const status = localStorage.getItem("UserStatus");
+    setUserStatus(status);
   }, []);
 
   const handleLogin = () => setShowLoginModal(true);
@@ -103,12 +117,12 @@ export default function Navbar() {
           </Link>
 
           {user && (
-            <Link
-              href="/dashboard"
+            <button
+              onClick={handleRedirect}
               className="text-xl lg:text-3xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
             >
               DASHBOARD
-            </Link>
+            </button>
           )}
 
           <button
@@ -133,26 +147,26 @@ export default function Navbar() {
               href="https://discord.gg/Qj2qyYQXBF"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition border-2 border-white"
+              className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
             >
-              <Image src="/discord.webp" alt="Discord" height={40} width={40} />
+              <Image src="/discord.webp" alt="Discord" height={24} width={24} />
             </Link>
 
             {user && (
-              <Link
-                href="/dashboard"
-                className="text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-              >
-                DASHBOARD
-              </Link>
-            )}
+            <button
+              onClick={handleRedirect}
+              className="text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
+            >
+              DASHBOARD
+            </button>
+          )}
 
             <button
               onClick={user ? handleLogout : handleLogin}
               className={user ? "text-white text-4xl hover:scale-110 transition" : "text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"}
               title={user ? "Logout" : "Login"}
             >
-              {user ? <FaSignOutAlt /> : "LOGIN"}
+              {user ? <FaSignOutAlt size={24}/> : "LOGIN"}
             </button>
           </div>
         </div>
