@@ -28,7 +28,6 @@ async function getUserContext(accessToken, router) {
       localStorage.setItem("UserStatus", userStatus);
 
       window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Login successful" } }));
-
       if (userStatus) {
         router.push("/team");
       } else {

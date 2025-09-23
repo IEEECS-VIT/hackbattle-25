@@ -8,6 +8,7 @@ export default function SubmissionPage() {
   const router = useRouter();
   const [team, setTeam] = useState(null);
   const [isLeader, setIsLeader] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     problem: "",
@@ -24,7 +25,6 @@ export default function SubmissionPage() {
       try {
         const result = await teamDetails();
         setTeam(result.data);
-
         setFormData({
           problem: result.data.problem_stmt || "",
           github: result.data.github_link || "",
@@ -49,34 +49,35 @@ export default function SubmissionPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isLeader) return;
-
+  
     let newErrors = {};
     if (!formData.problem.trim())
       newErrors.problem = "Problem Statement is required";
-
+  
     const githubRegex =
       /^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/?$/;
     if (!formData.github.trim()) newErrors.github = "GitHub link is required";
     else if (!githubRegex.test(formData.github))
       newErrors.github = "Enter a valid GitHub repository link";
-
+  
     const figmaRegex =
       /^(https?:\/\/)?(www\.)?figma\.com\/(file|design)\/[A-Za-z0-9]+\/[A-Za-z0-9_-]+(\?.*)?$/;
-    if (!formData.figma.trim()) newErrors.figma = "Figma link is required";
-    else if (!figmaRegex.test(formData.figma))
+    
+    // Make Figma optional
+    if (formData.figma.trim() && !figmaRegex.test(formData.figma))
       newErrors.figma = "Enter a valid Figma file link";
-
+  
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
-
+  
     try {
       const payload = {
         problem_stmt: formData.problem,
         github_link: formData.github,
-        figma_link: formData.figma,
+        figma_link: formData.figma || "", // keep empty string if not provided
         other_files: formData.other || "",
       };
-
+  
       await submitProject(payload);
       setTeam((prev) => ({ ...prev, ...payload }));
       window.dispatchEvent(
@@ -88,7 +89,7 @@ export default function SubmissionPage() {
       console.error(err);
       alert("Error submitting form. Please try again.");
     }
-  };
+  };  
 
   if (!team)
     return (
@@ -150,30 +151,43 @@ export default function SubmissionPage() {
     </p>
   )}
 
-  <div className="w-full relative">
-    <select
-      name="problem"
-      value={formData.problem}
-      onChange={handleChange}
-      disabled={!isLeader}
-      className="w-full max-w-full bg-black/60 border-2 border-red-600 text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-3 shadow-[0_0_5px_rgba(255,0,0,0.7)] leading-snug whitespace-normal break-words"
-    >
-      <option value="" disabled hidden>
-        Choose one of the 10 problem statements
-      </option>
-      <option value="The Whispering Blocks">The Whispering Blocks</option>
-      <option value="The Living Ledger">The Living Ledger</option>
-      <option value="The Sixth Sense Device">The Sixth Sense Device</option>
-      <option value="From Passive to Active Knowledge">
-        From Passive to Active Knowledge
-      </option>
-      <option value="The Ambient Health Guardian">The Ambient Health Guardian</option>
-      <option value="The Shadow Hunter">The Shadow Hunter</option>
-      <option value="The Invisible Scalability Test">
-        The Invisible Scalability Test
-      </option>
-    </select>
+<div className="w-full relative">
+  <div
+    className="w-full bg-black/60 border-2 border-red-600 text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-3 shadow-[0_0_5px_rgba(255,0,0,0.7)] cursor-pointer"
+    onClick={() => setOpen(!open)}
+  >
+    {formData.problem || "Choose a Problem Statement"}
   </div>
+
+  {open && (
+    <div className="absolute z-20 w-full mt-1 overflow-y-auto bg-black/80 border-2 border-red-600 rounded-md shadow-[0_0_5px_rgba(255,0,0,0.7)]">
+      {[
+        "The Whispering Blocks",
+        "The Living Ledger",
+        "The Sixth Sense Device",
+        "From Passive to Active Knowledge",
+        "The Ambient Health Guardian",
+        "The Shadow Hunter",
+        "The Invisible Scalability Test",
+      ].map((p, index) => (
+        <p
+          key={index}
+          onClick={() => {
+            if (!isLeader) return;
+            setFormData({ ...formData, problem: p });
+            setOpen(false);
+          }}
+          className="text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-2 hover:bg-red-600/40 break-words cursor-pointer border-b border-red-600 last:border-b-0"
+        >
+          {p}
+        </p>
+      ))}
+    </div>
+  )}
+</div>
+
+
+
 </div>
 
 

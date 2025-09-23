@@ -58,14 +58,14 @@ export default function TeamPage() {
   };
 
   const handleSubmissionClick = () => {
-    if (team?.members?.length < 5) {
-      window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "Team must have 5 members." },
-        })
-      );
-      return;
-    }
+    // if (team?.members?.length < 5) {
+    //   window.dispatchEvent(
+    //     new CustomEvent("showToast", {
+    //       detail: { text: "Team must have 5 members." },
+    //     })
+    //   );
+    //   return;
+    // }
     router.push("/submission");
   };
 
