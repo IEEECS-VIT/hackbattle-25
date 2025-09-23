@@ -217,7 +217,7 @@ export default function JoinTeam() {
           }}
         >
           <Image
-            src="/create_team_base.webp"
+            src="/create_team_base.svg"
             alt="Create Team Base"
             width={400}
             height={400}
