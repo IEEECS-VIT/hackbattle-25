@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { loginWithGoogle, logout } from "./Google";
 import Toast from "./Toast";
@@ -37,9 +38,7 @@ export default function Navbar() {
       localStorage.removeItem("accessToken");
       setUser(null);
       window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "Logged out successfully" },
-        })
+        new CustomEvent("showToast", { detail: { text: "Logged out successfully" } })
       );
     } catch (error) {
       console.error("Sign-Out Error:", error);
@@ -93,40 +92,51 @@ export default function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-4 ml-8">
-          <a
+          <Link
             href="https://discord.gg/Qj2qyYQXBF"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
           >
             <Image src="/discord.webp" alt="Discord" height={24} width={24} />
-          </a>
+          </Link>
 
-          {/* <button
+          {/*    <button
             onClick={user ? handleLogout : handleLogin}
             className="px-5 py-2 bg-yellow-500 text-black text-xl lg:text-2xl rounded-full hover:bg-yellow-400"
           >
             {user ? "LOGOUT" : "LOGIN"}
-          </button> */}
+          </button>  */}
         </div>
       </nav>
 
       {/* Mobile Navbar */}
       <div className="block md:hidden">
         <div className="fixed top-0 left-0 right-0 flex flex-row justify-between items-center px-6 py-4 z-30">
-          <button
-            onClick={() => setMenuOpen(true)}
-            className=" text-3xl text-white"
-          >
-            ☰
-          </button>
-
-          {/* <button
-            onClick={user ? handleLogout : handleLogin}
-            className="bg-yellow-500 text-black px-4 py-2 rounded-full text-2xl font-pixeboy"
-          >
-            {user ? "LOGOUT" : "LOGIN"}
-          </button> */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setMenuOpen(true)}
+              className=" text-3xl text-white"
+            >
+              ☰
+            </button>
+          </div>
+          <div className="flex items-center gap-4">
+            {/* <button
+              onClick={user ? handleLogout : handleLogin}
+              className="bg-yellow-500 text-black px-4 py-2 rounded-full text-2xl font-pixeboy"
+            >
+              {user ? "LOGOUT" : "LOGIN"}
+            </button> */}
+            <Link
+              href="https://discord.gg/Qj2qyYQXBF"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition border-2 border-white"
+            >
+              <Image src="/discord.webp" alt="Discord" height={40} width={40} />
+            </Link>
+          </div>
         </div>
 
         {menuOpen && (

@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { teamDetails } from "../api/team";
+import { teamDetails, leaveTeam } from "../api/team";
 import { useRouter } from "next/navigation";
+import Toast from "../components/Toast";
 
 export default function TeamPage() {
   const [team, setTeam] = useState(null);
-
+  const [toastMessage, setToastMessage] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   const router = useRouter();
 
@@ -31,6 +32,21 @@ export default function TeamPage() {
       setTimeout(() => setIsCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy: ", err);
+    }
+  };
+
+  const handleLeaveTeam = async () => {
+    try {
+      await leaveTeam();
+      localStorage.removeItem("teamDetails");
+      setToastMessage("Left team successfully ");
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    } catch (err) {
+      console.error("Error leaving team:", err);
+      setToastMessage("Failed to leave team");
     }
   };
 
@@ -65,7 +81,7 @@ export default function TeamPage() {
       />
 
       {/* Top Nav */}
-      <div className="relative z-20 p-4 flex justify-between items-start w-full">
+      <div className="relative z-20 p-4 w-full flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0">
         <button
           onClick={() => router.push("/")}
           className="w-11 h-10 sm:w-15 sm:h-15 bg-pink-500/70 hover:bg-pink-500/90 transition-colors flex items-center justify-center rounded-lg shadow-lg"
@@ -74,12 +90,20 @@ export default function TeamPage() {
           <div className="w-0 h-0 border-t-[12px] border-b-[12px] border-r-[16px] border-t-transparent border-b-transparent border-r-white ml-1"></div>
         </button>
 
-        <button
-          onClick={() => router.push("/submission")}
-          className="px-6 py-3 bg-pink-500/70 hover:bg-pink-500/90 transition-colors rounded-lg shadow-lg text-white font-semibold"
-        >
-          Submission
-        </button>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2 sm:mt-0">
+          <button
+            onClick={handleLeaveTeam}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg"
+          >
+            Leave Team
+          </button>
+          <button
+            onClick={() => router.push("/submission")}
+            className="px-6 py-2 bg-pink-500/70 hover:bg-pink-500/90 transition-colors rounded-lg shadow-lg text-white font-semibold"
+          >
+            Submission
+          </button>
+        </div>
       </div>
 
       {/* Dragon */}
@@ -186,13 +210,9 @@ export default function TeamPage() {
           {/* Members around leader */}
           {members.slice(0, 4).map((member, idx) => {
             const positions = [
-              // top-left
               "absolute top-[32%] left-[21%]",
-              // bottom-left
               "absolute top-[50%] left-[0%]",
-              // top-right
               "absolute top-[32%] left-[60%]",
-              // bottom-right
               "absolute top-[50%] left-[81%]",
             ];
             return (
@@ -241,7 +261,7 @@ export default function TeamPage() {
                 className="w-72 h-auto"
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <p className=" text-xs text-center  font-bold">{leader.name}</p>
+                <p className="text-xs text-center font-bold">{leader.name}</p>
                 <p className="text-sm text-pink-200">Leader</p>
               </div>
             </div>
@@ -259,7 +279,6 @@ export default function TeamPage() {
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <p className="text-xs text-center text-white">{member.name}</p>
-
                 <p className="text-sm text-pink-200">Member</p>
               </div>
             </div>
@@ -267,7 +286,7 @@ export default function TeamPage() {
         ))}
       </div>
 
-      {/* Copy success popup */}
+      {/* Copy Code Popup */}
       {isCopied && (
         <div className="fixed top-4 right-4 z-50 animate-bounce">
           <div className="bg-black text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
@@ -287,6 +306,11 @@ export default function TeamPage() {
             <span className="text-sm font-medium">Team code copied!</span>
           </div>
         </div>
+      )}
+
+   
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={() => setToastMessage("")} />
       )}
     </main>
   );

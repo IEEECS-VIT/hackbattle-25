@@ -184,14 +184,14 @@ export default function Home({ onFinish }) {
             <MinecraftTimer />
           </div>
 
-            {/* {user && (
+          {/*  {user && (
             <button
             onClick={handleRedirect}
             className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700"
           >
             {userStatus ? "Go to Team Page" : "Go to Dashboard"}
           </button>
-          )} */}
+          )}  */}
         </section>
 
         {/* Characters */}
@@ -207,17 +207,17 @@ export default function Home({ onFinish }) {
         </div>
         <div className="absolute bottom-58 right-3 -translate-x-1/2 z-10">
           <Image
-          width={0}
-
-height={0}            src="/video/frog.gif"
-alt="frog"
+            width={0}
+            height={0}
+            src="/video/frog.gif"
+            alt="frog"
             className="w-30 h-full"
           />
         </div>
         <div className="absolute bottom-10 right-19 -translate-x-1/2 z-10">
           <Image
-          width={0}
-          height={0}
+            width={0}
+            height={0}
             src="/video/axo.gif"
             alt="axo"
             className="w-30 h-full"
