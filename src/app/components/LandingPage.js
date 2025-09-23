@@ -6,11 +6,11 @@ import MinecraftTimer from "./Timer";
 import { useRouter } from "next/navigation";
 
 export default function Home({ onFinish }) {
-  const [loading, setLoading] = useState(true); // tracks asset loading
-  const [forcePlayOnce, setForcePlayOnce] = useState(true); // ensures video plays once
+  const [loading, setLoading] = useState(true);
+  const [forcePlayOnce, setForcePlayOnce] = useState(true);
   const [user, setUser] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
-  const router=useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -51,7 +51,7 @@ export default function Home({ onFinish }) {
     const status = localStorage.getItem("UserStatus");
     setUserStatus(status);
   }, []);
-  
+
   const handleRedirect = () => {
     if (userStatus === "true") {
       router.push("/team");
@@ -59,7 +59,7 @@ export default function Home({ onFinish }) {
       router.push("/dashboard");
     }
   };
-  
+
   return (
     <div className="relative select-none h-[100dvh] overflow-hidden" id="home">
       {loading && (
@@ -167,34 +167,16 @@ export default function Home({ onFinish }) {
           <div className="z-10 font-pixeboy text-[16vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
             HACKBATTLE
           </div>
-          {/* <div className="z-10 font-pixeboy text-[12vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
-            BATTLE
-          </div> */}
           <div className="z-10 text-[5vh] font-pixeboy mt-8 animate-glow-pulse">
             THE ULTIMATE 36 hour Hackathon
           </div>
           <div className="z-10 text-[5vh] font-pixeboy mt-0 animate-glow-pulse">
             starts in ...
           </div>
-          {/* <div className="z-10 font-pixeboy text-6xl mt-2 animate-glow-pulse">
-            
-          </div> */}
 
           <div className="relative b mt-6">
             <MinecraftTimer />
           </div>
-
-            {user && (
-            <div className="w-[50vw] ml-[12vw] mt-[2vh] flex justify-start">
-            <button
-              onClick={handleRedirect}
-              className="px-6 py-3 bg-[#d5b895] text-black font-pixeboy rounded-md hover:bg-[#a67a5b] hover:text-white text-[4vh]"
-            >
-              {userStatus=="true" ? "Go to Team Page" : "Go to Dashboard"}
-            </button>
-          </div>
-          
-          )}
         </section>
 
         {/* Characters */}
@@ -210,17 +192,17 @@ export default function Home({ onFinish }) {
         </div>
         <div className="absolute bottom-58 right-3 -translate-x-1/2 z-10">
           <Image
-          width={0}
-
-height={0}            src="/video/frog.gif"
-alt="frog"
+            width={0}
+            height={0}
+            src="/video/frog.gif"
+            alt="frog"
             className="w-30 h-full"
           />
         </div>
         <div className="absolute bottom-10 right-19 -translate-x-1/2 z-10">
           <Image
-          width={0}
-          height={0}
+            width={0}
+            height={0}
             src="/video/axo.gif"
             alt="axo"
             className="w-30 h-full"
