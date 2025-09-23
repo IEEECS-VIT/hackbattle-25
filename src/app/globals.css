@@ -273,3 +273,18 @@ html, body {
   min-height: 100%;
   will-change: transform;
 }
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+.animate-scaleUp {
+  animation: scaleUp 2s ease-out forwards;
+}

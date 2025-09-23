@@ -11,6 +11,11 @@ export default function Home({ onFinish }) {
   const [user, setUser] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
   const router=useRouter();
+  const [showImage, setShowImage] = useState(false);
+
+  const handleClick = () => {
+    setShowImage(true);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -94,16 +99,30 @@ export default function Home({ onFinish }) {
         draggable="false"
       />
 
-      <div className="absolute top-0 left-170 w-64 h-168 hidden md:block overflow-hidden z-0 opacity-60">
-        <Image
-          height={0}
-          width={0}
-          src="/waterfall.gif"
-          alt="Waterfall"
-          className="w-full h-150 object-cover"
-          draggable="false"
-        />
-      </div>
+<div className="absolute top-0 left-170 w-64 h-168 hidden md:block overflow-hidden z-0 opacity-60 cursor-pointer" onClick={handleClick}>
+  <Image
+    src="/waterfall.gif"
+    alt="Waterfall"
+    width={256}
+    height={168}
+    className="w-full h-full object-cover"
+    draggable="false"
+  />
+</div>
+
+{showImage && (
+  <div className="absolute top-0 left-150 w-64 h-168 hidden md:block overflow-hidden z-0 opacity-100 transition-all duration-[2000ms] ease-out scale-50 animate-scaleUp"
+  style={{ width: '512px', height: '512px' }}>
+    <Image
+      src="/ansh.png"
+      alt="Rising Image"
+      width={512}
+      height={512}
+      className="w-full h-full object-contain"
+      draggable="false"
+    />
+  </div>
+)}
 
       {/* Mobile Landing Component */}
       <div className="md:hidden">
