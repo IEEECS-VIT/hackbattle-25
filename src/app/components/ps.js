@@ -11,15 +11,15 @@ export default function ProblemStatements() {
 
   const statements = [
     {
-      title: "The Whispering Blocks",
+      title: "Whispering Blocks",
       desc: "Create a game or experience where the world isn’t static. The blocks, objects, or behaviours should react, change, or adapt to the player in some way."
     },
     {
-      title: "The Living Ledger",
+      title: "Living Ledger",
       desc: "Financial identities today are frozen snapshots of the past. What if they were fluid, evolving, and alive in real time? Reimagine how a person’s financial story could be told—not as numbers on a report, but as something dynamic, predictive, and deeply personal."
     },
     {
-      title: "The Sixth Sense Device",
+      title: "Sixth Sense Device",
       desc: "Our world is filled with forces we cannot see, hear, or touch. What if we could feel them? Design a way to give humans a 'sixth sense'—a subtle, intuitive channel for perceiving the invisible aspects of their environment."
     },
     {
@@ -27,15 +27,15 @@ export default function ProblemStatements() {
       desc: "Knowledge is often consumed passively—but true learning comes from transformation. How might you turn static content into experiences that spark curiosity, action, and creation? Build something that makes knowledge come alive."
     },
     {
-      title: "The Ambient Health Guardian",
+      title: "Ambient Health Guardian",
       desc: "Health isn’t limited to hospitals or apps; it lives in our everyday choices, environments, and habits. What if there were a guardian that quietly walked beside us, nudging us toward better health without demanding our attention? Envision what that guardian could be."
     },
     {
-      title: "The Shadow Hunter",
+      title: "Shadow Hunter",
       desc: "Systems and applications often hide weaknesses beneath the surface, invisible until it’s too late. What if you could build something that uncovers these hidden cracks, shining light on vulnerabilities before they can be exploited?"
     },
     {
-      title: "The Invisible Scalability Test",
+      title: "Invisible Scalability Test",
       desc: "Most apps scale well in theory but fail under sudden, unpredictable spikes (think ticket bookings, flash sales, or viral posts). What if you could design a system that stress tests applications invisibly in production, highlighting weak spots without breaking user experience?"
     }
   ];
@@ -55,7 +55,7 @@ export default function ProblemStatements() {
         PROBLEM STATEMENTS
       </h1>
 
-      <div className="flex flex-col md:flex-row w-[80vw] md:w-[60vw] gap-y-[1vh] gap-x-[2vw] md:gap-y-0 h-[90vh] md:h-[80vh] overflow-hidden relative z-10">
+      <div className="flex flex-col md:flex-row w-[80vw] md:w-[60vw] gap-y-[1vh] gap-x-[2vw] md:gap-y-0 h-[100vh] md:h-[80vh] overflow-hidden relative z-10">
         {statements.map((s, i) => (
           <div
             key={i}
