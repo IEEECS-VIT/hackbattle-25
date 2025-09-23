@@ -89,7 +89,7 @@ export default function TeamPage() {
       />
 
       {/* Top Nav */}
-      <div className="relative z-20 p-4 flex justify-between items-start w-full -top-12 md:top-12">
+      <div className="absolute z-20 p-4 flex justify-between items-start w-full top-4 md:top-4">
         <button
           onClick={() => router.push("/")}
           className="w-11 h-10 sm:w-15 sm:h-15 bg-pink-500/70 hover:bg-pink-500/90 transition-colors flex items-center justify-center rounded-lg shadow-lg"
@@ -171,7 +171,7 @@ export default function TeamPage() {
         <div className="relative w-full h-[70vh] min-h-[500px]">
           {/* Leader Center */}
           {leader && (
-            <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
+            <div className="absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
               <div className="relative mb-3">
                 <Image
                   src="/text-box-team.svg"
@@ -201,13 +201,13 @@ export default function TeamPage() {
           {members.slice(0, 4).map((member, idx) => {
   const positions = [
     // 1st member → left
-    "absolute top-[32%] left-[21%]",
+    "absolute top-[42%] left-[21%]",
     // 2nd member → right
-    "absolute top-[32%] left-[60%]",
+    "absolute top-[42%] left-[60%]",
     // 3rd member → left lower
-    "absolute top-[40%] -left-[5%]",
+    "absolute top-[50%] -left-[5%]",
     // 4th member → right lower
-    "absolute top-[40%] -right-[5%]",
+    "absolute top-[50%] -right-[5%]",
   ];
             return (
               <div

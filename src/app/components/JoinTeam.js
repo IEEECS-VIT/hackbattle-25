@@ -34,7 +34,6 @@ const Snowflakes = () => {
   );
 };
 
-// --- Reusable Modal Component ---
 const Modal = ({ title, inputLabel, buttonText, onClose, onSubmit }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -82,10 +81,42 @@ const Modal = ({ title, inputLabel, buttonText, onClose, onSubmit }) => {
   );
 };
 
-// --- Main Join Team Component ---
 export default function JoinTeam() {
-  const [modal, setModal] = useState(null); // 'join', 'create', or null
+  const [modal, setModal] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const preload = async () => {
+      const assets = [
+        "/create-join.svg",
+        "/mob-dash.svg",
+        "/create_team_base.svg",
+        "/join_team_base.svg",
+        "/loader.webm",
+      ];
+
+      const promises = assets.map(
+        (src) =>
+          new Promise((resolve) => {
+            if (src.endsWith(".webm")) {
+              const video = document.createElement("video");
+              video.src = src;
+              video.oncanplaythrough = resolve;
+            } else {
+              const img = new window.Image();
+              img.src = src;
+              img.onload = resolve;
+            }
+          })
+      );
+
+      await Promise.all(promises);
+      setLoading(false);
+    };
+
+    preload();
+  }, []);
 
   const handleJoinTeam = async (code) => {
     const result = await joinTeam(code);
@@ -97,7 +128,7 @@ export default function JoinTeam() {
       localStorage.setItem("UserStatus", "true");
       window.dispatchEvent(
         new CustomEvent("showToast", {
-          detail: { text: "Team Joined Successfullt" },
+          detail: { text: "Team Joined Successfully" },
         })
       );
       router.push("/team");
@@ -141,27 +172,40 @@ export default function JoinTeam() {
     audio.play();
   };
 
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
+        <video
+          src="/loader.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-32 h-32"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="relative h-screen w-screen flex flex-col items-center justify-center p-4 text-white font-pixeboy overflow-hidden">
       <Toast />
       <Image
-    src="/create-join.svg"
-    alt="Background"
-    fill
-    className="hidden md:block object-cover"
-    priority
-    draggable={false}
-  />
-  
-  <Image
-    src="/mob-dash.svg"
-    alt="Background"
-    fill
-    className="block md:hidden object-cover"
-    priority
-    draggable={false}
-  />
-
+        src="/create-join.svg"
+        alt="Background"
+        fill
+        className="hidden md:block object-cover"
+        priority
+        draggable={false}
+      />
+      <Image
+        src="/mob-dash.svg"
+        alt="Background"
+        fill
+        className="block md:hidden object-cover"
+        priority
+        draggable={false}
+      />
       <Snowflakes />
 
       <div className="flex flex-col md:flex-row items-center gap-16 md:gap-24 z-10">
