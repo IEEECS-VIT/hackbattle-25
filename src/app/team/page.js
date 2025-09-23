@@ -110,8 +110,8 @@ const handleSubmissionClick = () => {
             Leave Team
           </button>
           <button
-            onClick={() => router.push("/submission")}
-            className="px-6 py-2 bg-pink-500/70 hover:bg-pink-500/90 transition-colors rounded-lg shadow-lg text-white font-semibold"
+            onClick={handleSubmissionClick}
+            className={`px-6 py-3 rounded-lg shadow-lg text-white font-semibold transition-colors ${"bg-pink-500/70 hover:bg-pink-500/90"}`}
           >
             Submission
           </button>
