@@ -81,7 +81,7 @@ export default function TeamPage() {
       {/* Background */}
       
       <Image
-        src="/team-info-bg.svg"
+        src="/team-info-bg.webp"
         alt="Background"
         fill
         className="object-cover -z-10 brightness-110 scale-100"

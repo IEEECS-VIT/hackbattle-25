@@ -89,8 +89,8 @@ export default function JoinTeam() {
   useEffect(() => {
     const preload = async () => {
       const assets = [
-        "/create-join.svg",
-        "/mob-dash.svg",
+        "/create-join.webp",
+        "/mob-dash.webp",
         "/create_team_base.svg",
         "/join_team_base.svg",
         "/loader.webm",
@@ -191,7 +191,7 @@ export default function JoinTeam() {
     <div className="relative h-screen w-screen flex flex-col items-center justify-center p-4 text-white font-pixeboy overflow-hidden">
       <Toast />
       <Image
-        src="/create-join.svg"
+        src="/create-join.webp"
         alt="Background"
         fill
         className="hidden md:block object-cover"
@@ -199,7 +199,7 @@ export default function JoinTeam() {
         draggable={false}
       />
       <Image
-        src="/mob-dash.svg"
+        src="/mob-dash.webp"
         alt="Background"
         fill
         className="block md:hidden object-cover"
@@ -217,7 +217,7 @@ export default function JoinTeam() {
           }}
         >
           <Image
-            src="/create_team_base.svg"
+            src="/create_team_base.webp"
             alt="Create Team Base"
             width={400}
             height={400}
