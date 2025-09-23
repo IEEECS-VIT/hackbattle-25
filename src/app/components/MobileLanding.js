@@ -58,7 +58,7 @@ export default function LandingPagePhone() {
       {/* Page Content */}
       <div className="relative z-10 flex flex-col items-center justify-between h-full text-center">
         {/* Heading */}
-        <section className="flex flex-col items-center font-pixeboy mt-12">
+        <section className="flex flex-col items-center font-pixeboy mt-16">
           <div>
                       <Image
                         src="/bob.png"
@@ -88,14 +88,16 @@ export default function LandingPagePhone() {
         <div className="flex justify-center h-[15vh]">
           <MinecraftTimer />
         </div>
-        {/*  {userStatus && (
+         {userStatus && (
+          <div className="w-[50vw] ml-[12vw] mt-[2vh] flex justify-start">
           <button
             onClick={handleRedirect}
-            className="px-6 py-3 bg-red-600 text-white font-pixeboy text-xl rounded-md hover:bg-red-700 transition mt-4"
+            className="px-6 py-3 bg-yellow-600 text-white font-pixeboy text-xl rounded-md hover:bg-yellow-700"
           >
-          {userStatus === "true" ? "Go to Team Page" : "Go to Dashboard"}
-          </button> 
-        )} */}
+            {userStatus ? "Go to Team Page" : "Go to Dashboard"}
+          </button>
+        </div>
+        )}
 
         <div className="relative w-full flex justify-start items-end">
           <Image
