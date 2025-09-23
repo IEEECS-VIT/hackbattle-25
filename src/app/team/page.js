@@ -110,7 +110,7 @@ export default function TeamPage() {
 
 
       {/* Team Name + Code */}
-      <div className="text-center text-white px-4 w-full mt-6">
+      <div className="text-center text-white px-4 w-full h-full mt-24 md:mt-12">
         <h1 className="text-pink-500 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
           {team.name}
         </h1>
@@ -243,7 +243,7 @@ export default function TeamPage() {
       </div>
 
       {/* Mobile Layout */}
-      <div className="block sm:hidden w-full max-w-sm mx-auto space-y-6 px-2">
+      <div className="block sm:hidden absolute w-full max-w-sm mx-auto space-y-6 px-2">
         {leader && (
           <div className="flex flex-col items-center">
             <div className="relative">
