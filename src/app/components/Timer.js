@@ -38,7 +38,7 @@ export default function MinecraftTimer() {
   const TimeBlock = ({ value, label, color }) => (
     <div className="flex flex-col items-center mx-2 sm:mx-4">
       <div 
-        className={`${color} border-4 border-amber-900 p-4 sm:p-6 relative transform transition-transform hover:scale-105`}
+        className={`${color} p-4 sm:p-6 relative transform transition-transform hover:scale-105`}
         style={{
           boxShadow: 'inset 4px 4px 0px rgba(205, 133, 63, 0.8), inset -4px -4px 0px rgba(93, 78, 55, 0.8), 0 8px 16px rgba(0, 0, 0, 0.3)',
           textShadow: '2px 2px 0px rgba(0, 0, 0, 0.8)'
@@ -60,7 +60,9 @@ export default function MinecraftTimer() {
   );
 
   return (
-    <div className="w-full">
+    <div className="w-full relative h-auto font-pixeboy">
+      <div className="text-2xl text-[5vh] font-pixeboy mt-8 animate-glow-pulse">THE ULTIMATE 36 hour HACKATHON</div>
+          <div className="text-xl my-2">starts in...</div>
       <div className="flex justify-center items-center gap-1 flex-nowrap">
         {isExpired ? (
           <div className="text-center">
@@ -73,12 +75,6 @@ export default function MinecraftTimer() {
           </div>
         ) : (
           <>
-            <TimeBlock 
-              value={timeLeft.days} 
-              label="DAYS" 
-              color="bg-orange-600 hover:bg-orange-500"
-            />
-            <div className="text-yellow-400 text-4xl sm:text-5xl font-bold mx-2 animate-pulse">:</div>
             
             <TimeBlock 
               value={timeLeft.hours} 

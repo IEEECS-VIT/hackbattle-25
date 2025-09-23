@@ -1,7 +1,6 @@
 export async function POST(req) {
   try {
     const body = await req.json();
-    console.log("Incoming body:", body);
 
     const { message } = body;
 
@@ -30,7 +29,6 @@ export async function POST(req) {
     clearTimeout(timeout);
 
     const rawText = await res.text();
-    console.log("Modal raw response:", rawText);
 
     if (!res.ok) {
       return new Response(

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { teamDetails } from "../api/team";
 import { useRouter } from "next/navigation";
+import Toast from "../components/Toast";
 
 export default function TeamPage() {
   const [team, setTeam] = useState(null);
@@ -34,6 +35,18 @@ export default function TeamPage() {
     }
   };
 
+  const handleSubmissionClick = () => {
+    if (team?.members?.length < 5) {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Team must have 5 members." },
+        })
+      );
+      return;
+    }
+    router.push("/submission");
+  };
+
   if (!team)
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
@@ -54,10 +67,21 @@ export default function TeamPage() {
   const members = team.members.slice(1);
 
   return (
-    <main className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <>
+    <div className="pointer-events-none fixed top-16 right-4 md:top-8 md:right-6 lg:top-10 lg:right-8 z-10">
+    <Image
+      src="/dragon.webp"
+      alt="Dragon"
+      width={220}
+      height={80}
+      className="block w-24 sm:w-32 md:w-40 lg:w-48 xl:w-56 h-auto"
+    />
+  </div>
+    <main className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
       {/* Background */}
+      
       <Image
-        src="/team-info-bg.svg"
+        src="/team-info-bg.webp"
         alt="Background"
         fill
         className="object-cover -z-10 brightness-110 scale-100"
@@ -65,7 +89,7 @@ export default function TeamPage() {
       />
 
       {/* Top Nav */}
-      <div className="relative z-20 p-4 flex justify-between items-start w-full">
+      <div className="absolute z-20 p-4 flex justify-between items-start w-full top-4 md:top-4">
         <button
           onClick={() => router.push("/")}
           className="w-11 h-10 sm:w-15 sm:h-15 bg-pink-500/70 hover:bg-pink-500/90 transition-colors flex items-center justify-center rounded-lg shadow-lg"
@@ -75,28 +99,18 @@ export default function TeamPage() {
         </button>
 
         <button
-          onClick={() => router.push("/submission")}
-          className="px-6 py-3 bg-pink-500/70 hover:bg-pink-500/90 transition-colors rounded-lg shadow-lg text-white font-semibold"
+          onClick={handleSubmissionClick}
+          className={`px-6 py-3 rounded-lg shadow-lg text-white font-semibold transition-colors ${
+            "bg-pink-500/70 hover:bg-pink-500/90"
+          }`}
         >
           Submission
         </button>
       </div>
 
-      {/* Dragon */}
-      <div className="relative w-full h-full hidden sm:block">
-        <div className="absolute -top-4 right-2 sm:-top-6 sm:right-4 md:-top-8 md:right-6 lg:-top-10 lg:right-8 z-50">
-          <Image
-            src="/dragon.webp"
-            alt="Dragon"
-            width={220}
-            height={80}
-            className="w-24 sm:w-32 md:w-40 lg:w-48 xl:w-56 h-auto"
-          />
-        </div>
-      </div>
 
       {/* Team Name + Code */}
-      <div className="text-center text-white px-4 w-full mt-6">
+      <div className="text-center text-white px-4 w-full h-full mt-24 md:mt-12">
         <h1 className="text-pink-500 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
           {team.name}
         </h1>
@@ -157,7 +171,7 @@ export default function TeamPage() {
         <div className="relative w-full h-[70vh] min-h-[500px]">
           {/* Leader Center */}
           {leader && (
-            <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
+            <div className="absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
               <div className="relative mb-3">
                 <Image
                   src="/text-box-team.svg"
@@ -185,16 +199,16 @@ export default function TeamPage() {
 
           {/* Members around leader */}
           {members.slice(0, 4).map((member, idx) => {
-            const positions = [
-              // top-left
-              "absolute top-[32%] left-[21%]",
-              // bottom-left
-              "absolute top-[50%] left-[0%]",
-              // top-right
-              "absolute top-[32%] left-[60%]",
-              // bottom-right
-              "absolute top-[50%] left-[81%]",
-            ];
+  const positions = [
+    // 1st member → left
+    "absolute top-[42%] left-[21%]",
+    // 2nd member → right
+    "absolute top-[42%] left-[60%]",
+    // 3rd member → left lower
+    "absolute top-[50%] -left-[5%]",
+    // 4th member → right lower
+    "absolute top-[50%] -right-[5%]",
+  ];
             return (
               <div
                 key={member.email}
@@ -229,7 +243,7 @@ export default function TeamPage() {
       </div>
 
       {/* Mobile Layout */}
-      <div className="block sm:hidden w-full max-w-sm mx-auto space-y-6 px-2">
+      <div className="block sm:hidden absolute w-full max-w-sm mx-auto space-y-6 px-2">
         {leader && (
           <div className="flex flex-col items-center">
             <div className="relative">
@@ -241,9 +255,7 @@ export default function TeamPage() {
                 className="w-72 h-auto"
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <p className=" text-xs text-center  font-bold">
-                  {leader.name}
-                </p>
+                <p className=" text-xs text-center  font-bold">{leader.name}</p>
                 <p className="text-sm text-pink-200">Leader</p>
               </div>
             </div>
@@ -290,6 +302,9 @@ export default function TeamPage() {
           </div>
         </div>
       )}
+    <Toast />
+    
     </main>
+    </>
   );
 }

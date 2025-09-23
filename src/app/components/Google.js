@@ -18,7 +18,6 @@ export const auth = getAuth(app);
 async function getUserContext(accessToken, router) {
   try {
     const res = await checkStatus(accessToken);
-    console.log("res", res);
 
     if (res.status === 204) {
       window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "User is not registered" } }));

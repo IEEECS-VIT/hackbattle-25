@@ -81,7 +81,7 @@ export default function SubmissionPage() {
       setTeam((prev) => ({ ...prev, ...payload }));
       window.dispatchEvent(
         new CustomEvent("showToast", {
-          detail: { text: "Task submitted successfully ✅" },
+          detail: { text: "Task submitted successfully." },
         })
       );
     } catch (err) {
@@ -143,27 +143,39 @@ export default function SubmissionPage() {
           className="flex flex-col items-center gap-6 w-full"
           onSubmit={handleSubmit}
         >
-          <div className="w-full">
-            {errors.problem && (
-              <p className="text-yellow-400 text-xs text-center">
-                {errors.problem}
-              </p>
-            )}
-            <select
-              name="problem"
-              value={formData.problem}
-              onChange={handleChange}
-              disabled={!isLeader}
-              className="w-full bg-black/60 border-2 border-red-600 text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-6 text-center shadow-[0_0_5px_rgba(255,0,0,0.7)]"
-            >
-              <option value="" disabled hidden>
-                Choose one of the 10 problem statements
-              </option>
-              <option value="Problem 1">Problem 1</option>
-              <option value="Problem 2">Problem 2</option>
-              <option value="Problem 3">Problem 3</option>
-            </select>
-          </div>
+<div className="w-full">
+  {errors.problem && (
+    <p className="text-yellow-400 text-xs text-center">
+      {errors.problem}
+    </p>
+  )}
+
+  <div className="w-full relative">
+    <select
+      name="problem"
+      value={formData.problem}
+      onChange={handleChange}
+      disabled={!isLeader}
+      className="w-full max-w-full bg-black/60 border-2 border-red-600 text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-3 shadow-[0_0_5px_rgba(255,0,0,0.7)] leading-snug whitespace-normal break-words"
+    >
+      <option value="" disabled hidden>
+        Choose one of the 10 problem statements
+      </option>
+      <option value="The Whispering Blocks">The Whispering Blocks</option>
+      <option value="The Living Ledger">The Living Ledger</option>
+      <option value="The Sixth Sense Device">The Sixth Sense Device</option>
+      <option value="From Passive to Active Knowledge">
+        From Passive to Active Knowledge
+      </option>
+      <option value="The Ambient Health Guardian">The Ambient Health Guardian</option>
+      <option value="The Shadow Hunter">The Shadow Hunter</option>
+      <option value="The Invisible Scalability Test">
+        The Invisible Scalability Test
+      </option>
+    </select>
+  </div>
+</div>
+
 
           {/* GitHub */}
           <div className="w-full">

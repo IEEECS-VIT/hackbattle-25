@@ -44,6 +44,7 @@ export default function RootLayout({ children }) {
           {children}
         {/* </SmoothScroll> */}
         <CustomCursor />
+        <Chatbot/>
       </body>
     </html>
   );

@@ -23,19 +23,15 @@ apiClient.interceptors.response.use(
       if (error.response && error.response.status === 401) {
         localStorage.removeItem("accessToken");
   
-        if (typeof window !== "undefined") {
-          // Show toast
-          window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Session Expired. Please login again." } }));
-
-  
-          // Longer delay to ensure toast is visible
-          setTimeout(() => {
+          window.dispatchEvent(
+            new CustomEvent("showToast", {
+              detail: { text: "Task submitted successfully." },
+            })
+          );
             window.location.href = "/";
-          }, 2500);
         }
       }
-      return Promise.reject(error);
-    }
+    
   );
 
 export default apiClient;
