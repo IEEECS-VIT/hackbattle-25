@@ -9,7 +9,6 @@ export const checkStatus = async (accessToken) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response, "response");
     return response;
   } catch (error) {
     console.error("Error checking status:", error);

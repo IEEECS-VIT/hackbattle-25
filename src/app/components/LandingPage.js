@@ -49,7 +49,7 @@ export default function Home({ onFinish }) {
 
   useEffect(() => {
     const status = localStorage.getItem("UserStatus");
-    if (status === "true" || status === "false") setUserStatus(status);
+    setUserStatus(status);
   }, []);
   
   const handleRedirect = () => {
@@ -190,7 +190,7 @@ export default function Home({ onFinish }) {
               onClick={handleRedirect}
               className="px-6 py-3 bg-yellow-600 text-white font-pixeboy text-xl rounded-md hover:bg-yellow-700"
             >
-              {userStatus ? "Go to Team Page" : "Go to Dashboard"}
+              {userStatus=="true" ? "Go to Team Page" : "Go to Dashboard"}
             </button>
           </div>
           

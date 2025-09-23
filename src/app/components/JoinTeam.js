@@ -88,7 +88,6 @@ export default function JoinTeam() {
   const router = useRouter();
 
   const handleJoinTeam = async (code) => {
-    console.log("Joining team with code:", code);
     const result = await joinTeam(code);
     if (result.status == 204) {
       window.dispatchEvent(
@@ -127,7 +126,6 @@ export default function JoinTeam() {
       );
     } else if (result.status == 201) {
       localStorage.setItem("UserStatus", "true");
-      console.log("team created successfully");
       window.location.href = "/team";
     } else if (result.status == 200) {
       window.dispatchEvent(
@@ -136,7 +134,6 @@ export default function JoinTeam() {
         })
       );
     }
-    console.log("Creating team with name:", name);
   };
 
   const playSound = () => {
@@ -148,13 +145,22 @@ export default function JoinTeam() {
     <div className="relative h-screen w-screen flex flex-col items-center justify-center p-4 text-white font-pixeboy overflow-hidden">
       <Toast />
       <Image
-        src="/create-join.svg"
-        alt="Background"
-        fill
-        className="object-cover"
-        priority
-        draggable={false}
-      />
+    src="/create-join.svg"
+    alt="Background"
+    fill
+    className="hidden md:block object-cover"
+    priority
+    draggable={false}
+  />
+  
+  <Image
+    src="/mob-dash.svg"
+    alt="Background"
+    fill
+    className="block md:hidden object-cover"
+    priority
+    draggable={false}
+  />
 
       <Snowflakes />
 
