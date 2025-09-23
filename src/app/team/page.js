@@ -10,6 +10,7 @@ export default function TeamPage() {
   const [toastMessage, setToastMessage] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   const router = useRouter();
+  
 
   useEffect(() => {
     const getTeamDetails = async () => {
@@ -34,6 +35,17 @@ export default function TeamPage() {
       console.error("Failed to copy: ", err);
     }
   };
+const handleSubmissionClick = () => {
+  if (team?.members?.length < 5) {
+    window.dispatchEvent(
+      new CustomEvent("showToast", {
+        detail: { text: "Team must have 5 members." },
+      })
+    );
+    return;
+  }
+  router.push("/submission");
+};
 
   const handleLeaveTeam = async () => {
     try {
