@@ -7,7 +7,9 @@ export const createTeam = async (teamName) => {
 export const joinTeam = async (team_code) => {
   return apiClient.post("/teams/join", { team_code });
 };
-
+export const leaveTeam = async () => {
+  return apiClient.delete("/teams/leave");
+};
 export const teamDetails = async () => {
   return apiClient.get("/teams/get");
 };
