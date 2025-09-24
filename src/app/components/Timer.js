@@ -1,39 +1,57 @@
 import React, { useState, useEffect } from 'react';
 
-export default function MinecraftTimer() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0
-  });
+export default function HackathonTimer() {
+  const hackStartTime = new Date('2025-09-24T08:00:00');
+  const events = [
+    { name: 'Review 1', time: new Date('2025-09-24T16:00:00') },
+    { name: 'Review 2', time: new Date('2025-09-25T02:30:00') },
+    { name: 'Review 3', time: new Date('2025-09-25T12:00:00') },
+    { name: 'Final Pitches', time: new Date('2025-09-25T15:00:00') }
+  ];
 
-  const [isExpired, setIsExpired] = useState(false);
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [phase, setPhase] = useState('preHack'); // 'preHack', 'event', 'ended'
 
   useEffect(() => {
-    const targetDate = new Date('2025-09-24T08:00:00');
-    
-    const updateTimer = () => {
-      const now = new Date();
-      const difference = targetDate.getTime() - now.getTime();
+    const interval = setInterval(() => {
+      const now = new Date(); // current time
 
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      if (phase === 'preHack') {
+        const diff = hackStartTime.getTime() - now.getTime();
+        if (diff <= 0) {
+          setPhase('event');
+        } else {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          setTimeLeft({ hours, minutes, seconds });
+        }
+      } else if (phase === 'event') {
+        if (currentEventIndex >= events.length) {
+          setPhase('ended');
+          return;
+        }
 
-        setTimeLeft({ days, hours, minutes });
-        setIsExpired(false);
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0 });
-        setIsExpired(true);
+        const diff = events[currentEventIndex].time.getTime() - now.getTime();
+        if (diff <= 0) {
+          if (currentEventIndex < events.length - 1) {
+            setCurrentEventIndex(currentEventIndex + 1);
+          } else {
+            setPhase('ended');
+          }
+        } else {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          setTimeLeft({ hours, minutes, seconds });
+        }
       }
-    };
-
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [phase, currentEventIndex]); // still can leave dependencies, it works fine now
+  
 
   const TimeBlock = ({ value, label, color }) => (
     <div className="flex flex-col items-center mx-2 sm:mx-4">
@@ -47,54 +65,33 @@ export default function MinecraftTimer() {
         <div className="text-3xl font-bold text-white text-center leading-none">
           {String(value).padStart(2, '0')}
         </div>
-        
-        {/* Pixelated shine effect */}
-        <div className="absolute top-1 left-1 w-4 h-4 bg-white opacity-30" />
-        <div className="absolute top-1 left-6 w-2 h-2 bg-white opacity-20" />
       </div>
-      
       <div className="mt-3 text-yellow-300 text-xl font-bold uppercase tracking-wider">
         {label}
       </div>
     </div>
   );
 
+  let labelText = '';
+  if (phase === 'preHack') labelText = 'Hack starts in...';
+  else if (phase === 'event') labelText = `${events[currentEventIndex].name} starts in...`;
+  else labelText = 'Hack has ended!';
+
   return (
-    <div className="w-full">
-      <div className="flex justify-center items-center gap-1 flex-nowrap">
-        {isExpired ? (
-          <div className="text-center">
-            <div className="text-4xl sm:text-6xl font-bold text-red-400 mb-4 animate-bounce">
-              TIME'S UP!
-            </div>
-            <div className="text-xl text-yellow-600">
-              🎉 The adventure begins! 🎉
-            </div>
-          </div>
-        ) : (
-          <>
-            <TimeBlock 
-              value={timeLeft.days} 
-              label="DAYS" 
-              color="bg-orange-600 hover:bg-orange-500"
-            />
-            <div className="text-yellow-400 text-4xl sm:text-5xl font-bold mx-2 animate-pulse">:</div>
-            
-            <TimeBlock 
-              value={timeLeft.hours} 
-              label="HOURS" 
-              color="bg-blue-600 hover:bg-blue-500"
-            />
-            <div className="text-yellow-400 text-4xl sm:text-5xl font-bold mx-2 animate-pulse">:</div>
-            
-            <TimeBlock 
-              value={timeLeft.minutes} 
-              label="MINUTES" 
-              color="bg-purple-600 hover:bg-purple-500"
-            />
-          </>
-        )}
+    <div className="w-full relative h-auto font-pixeboy">
+      <div className="text-2xl text-[5vh] font-pixeboy mt-8 animate-glow-pulse">
+        THE ULTIMATE 36 HOUR HACKATHON
       </div>
+      <div className="text-xl my-2">{labelText}</div>
+      {phase !== 'ended' && (
+        <div className="flex justify-center items-center gap-1 flex-nowrap">
+          <TimeBlock value={timeLeft.hours} label="HOURS" color="bg-blue-600 hover:bg-blue-500" />
+          <div className="text-yellow-400 text-4xl sm:text-5xl font-bold mx-2 animate-pulse">:</div>
+          <TimeBlock value={timeLeft.minutes} label="MINUTES" color="bg-purple-600 hover:bg-purple-500" />
+          <div className="text-yellow-400 text-4xl sm:text-5xl font-bold mx-2 animate-pulse">:</div>
+          <TimeBlock value={timeLeft.seconds} label="SECONDS" color="bg-red-600 hover:bg-red-500" />
+        </div>
+      )}
     </div>
   );
 }

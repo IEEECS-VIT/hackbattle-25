@@ -34,7 +34,6 @@ const Snowflakes = () => {
   );
 };
 
-// --- Reusable Modal Component ---
 const Modal = ({ title, inputLabel, buttonText, onClose, onSubmit }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -82,33 +81,69 @@ const Modal = ({ title, inputLabel, buttonText, onClose, onSubmit }) => {
   );
 };
 
-// --- Main Join Team Component ---
 export default function JoinTeam() {
-  const [modal, setModal] = useState(null); // 'join', 'create', or null
+  const [modal, setModal] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  useEffect(() => {
+    const preload = async () => {
+      const assets = [
+        "/create-join.webp",
+        "/mob-dash.webp",
+        "/create_team_base.svg",
+        "/join_team_base.svg",
+        "/loader.webm",
+      ];
+
+      const promises = assets.map(
+        (src) =>
+          new Promise((resolve) => {
+            if (src.endsWith(".webm")) {
+              const video = document.createElement("video");
+              video.src = src;
+              video.oncanplaythrough = resolve;
+            } else {
+              const img = new window.Image();
+              img.src = src;
+              img.onload = resolve;
+            }
+          })
+      );
+
+      await Promise.all(promises);
+      setLoading(false);
+    };
+
+    preload();
+  }, []);
+
   const handleJoinTeam = async (code) => {
-    console.log("Joining team with code:", code);
+    setLoading(true);
     const result = await joinTeam(code);
     if (result.status == 204) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", { detail: { text: "Invalid Team Code" } })
       );
     } else if (result.status == 200) {
+    setLoading(false);
       localStorage.setItem("UserStatus", "true");
       window.dispatchEvent(
         new CustomEvent("showToast", {
-          detail: { text: "Team Joined Successfullt" },
+          detail: { text: "Team Joined Successfully" },
         })
       );
       router.push("/team");
     } else if (result.status == 208) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "Team has the maximum number of members allowed." },
         })
       );
     } else if (result.status == 201) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "You are already in a team." },
@@ -118,25 +153,28 @@ export default function JoinTeam() {
   };
 
   const handleCreateTeam = async (name) => {
+    setLoading(true);
+
     const result = await createTeam(name);
     if (result.status == 208) {
+    setLoading(true);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "Team name already taken" },
         })
       );
     } else if (result.status == 201) {
+    setLoading(false);
       localStorage.setItem("UserStatus", "true");
-      console.log("team created successfully");
       window.location.href = "/team";
     } else if (result.status == 200) {
+    setLoading(false);
       window.dispatchEvent(
         new CustomEvent("showToast", {
           detail: { text: "You are already in a team." },
         })
       );
     }
-    console.log("Creating team with name:", name);
   };
 
   const playSound = () => {
@@ -144,18 +182,40 @@ export default function JoinTeam() {
     audio.play();
   };
 
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
+        <video
+          src="/loader.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-32 h-32"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="relative h-screen w-screen flex flex-col items-center justify-center p-4 text-white font-pixeboy overflow-hidden">
       <Toast />
       <Image
-        src="/create-join.svg"
+        src="/create-join.webp"
         alt="Background"
         fill
-        className="object-cover"
+        className="hidden md:block object-cover"
         priority
         draggable={false}
       />
-
+      <Image
+        src="/mob-dash.webp"
+        alt="Background"
+        fill
+        className="block md:hidden object-cover"
+        priority
+        draggable={false}
+      />
       <Snowflakes />
 
       <div className="flex flex-col md:flex-row items-center gap-16 md:gap-24 z-10">

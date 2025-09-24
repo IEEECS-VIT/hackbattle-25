@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.8",
     "axios": "^1.12.1",
     "firebase": "^12.2.1",
     "framer-motion": "^12.23.12",

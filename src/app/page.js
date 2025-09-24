@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import navbar from "./components/Navbar";
 import Home from "./components/LandingPage";
 import About from "./components/about";
 import FaqSection from "src/components/FaqSection";

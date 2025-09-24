@@ -7,7 +7,6 @@ const apiClient = axios.create({
   baseURL: BACKEND_URL,
 });
 
-// Attach Authorization token
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
   if (token) {
@@ -16,26 +15,24 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle 401 globally
 apiClient.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem("accessToken");
-  
-        if (typeof window !== "undefined") {
-          // Show toast
-          window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Session Expired. Please login again." } }));
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("accessToken");
 
-  
-          // Longer delay to ensure toast is visible
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 2500);
-        }
-      }
-      return Promise.reject(error);
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Token expired. Please Login Again." },
+        })
+      );
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000); // wait 2s so toast is visible
     }
-  );
+    return Promise.reject(error);
+  }
+);
 
 export default apiClient;
