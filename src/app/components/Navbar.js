@@ -18,7 +18,9 @@ export default function Navbar() {
     if (userStatus === "true") {
       router.push("/team");
     } else if (userStatus === "false") {
-      router.push("/dashboard");
+      window.dispatchEvent(
+        new CustomEvent("showToast", { detail: { text: "Team Formation has closed." } })
+      );
     }
   };
 
@@ -35,16 +37,12 @@ export default function Navbar() {
   const handleLogin = () => setShowLoginModal(true);
 
   const handleChoice = async (type) => {
-    try {
+    
       await loginWithGoogle(type, router);
       const token = localStorage.getItem("accessToken");
       setUser(token);
       setShowLoginModal(false);
-    } catch (err) {
-      window.dispatchEvent(
-        new CustomEvent("showToast", { detail: { text: err.message } })
-      );
-    }
+    
   };
 
   const handleLogout = async () => {

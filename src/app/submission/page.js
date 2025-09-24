@@ -46,50 +46,50 @@ export default function SubmissionPage() {
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!isLeader) return;
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!isLeader) return;
   
-    let newErrors = {};
-    if (!formData.problem.trim())
-      newErrors.problem = "Problem Statement is required";
+  //   let newErrors = {};
+  //   if (!formData.problem.trim())
+  //     newErrors.problem = "Problem Statement is required";
   
-    const githubRegex =
-      /^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/?$/;
-    if (!formData.github.trim()) newErrors.github = "GitHub link is required";
-    else if (!githubRegex.test(formData.github))
-      newErrors.github = "Enter a valid GitHub repository link";
+  //   const githubRegex =
+  //     /^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/?$/;
+  //   if (!formData.github.trim()) newErrors.github = "GitHub link is required";
+  //   else if (!githubRegex.test(formData.github))
+  //     newErrors.github = "Enter a valid GitHub repository link";
   
-    const figmaRegex =
-      /^(https?:\/\/)?(www\.)?figma\.com\/(file|design)\/[A-Za-z0-9]+\/[A-Za-z0-9_-]+(\?.*)?$/;
+  //   const figmaRegex =
+  //     /^(https?:\/\/)?(www\.)?figma\.com\/(file|design)\/[A-Za-z0-9]+\/[A-Za-z0-9_-]+(\?.*)?$/;
     
-    // Make Figma optional
-    if (formData.figma.trim() && !figmaRegex.test(formData.figma))
-      newErrors.figma = "Enter a valid Figma file link";
+  //   // Make Figma optional
+  //   if (formData.figma.trim() && !figmaRegex.test(formData.figma))
+  //     newErrors.figma = "Enter a valid Figma file link";
   
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+  //   setErrors(newErrors);
+  //   if (Object.keys(newErrors).length > 0) return;
   
-    try {
-      const payload = {
-        problem_stmt: formData.problem,
-        github_link: formData.github,
-        figma_link: formData.figma || "", // keep empty string if not provided
-        other_files: formData.other || "",
-      };
+  //   try {
+  //     const payload = {
+  //       problem_stmt: formData.problem,
+  //       github_link: formData.github,
+  //       figma_link: formData.figma || "", // keep empty string if not provided
+  //       other_files: formData.other || "",
+  //     };
   
-      await submitProject(payload);
-      setTeam((prev) => ({ ...prev, ...payload }));
-      window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "Task submitted successfully." },
-        })
-      );
-    } catch (err) {
-      console.error(err);
-      alert("Error submitting form. Please try again.");
-    }
-  };  
+  //     await submitProject(payload);
+  //     setTeam((prev) => ({ ...prev, ...payload }));
+  //     window.dispatchEvent(
+  //       new CustomEvent("showToast", {
+  //         detail: { text: "Task submitted successfully." },
+  //       })
+  //     );
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Error submitting form. Please try again.");
+  //   }
+  // };  
 
   if (!team)
     return (
@@ -142,7 +142,7 @@ export default function SubmissionPage() {
       <div className="mx-auto relative z-10 w-full max-w-md sm:max-w-lg lg:w-[40vw] bg-[#370000]/60 text-center text-white p-6 rounded-md shadow-[0_0_8px_rgba(255,0,0,0.7)]">
         <form
           className="flex flex-col items-center gap-6 w-full"
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
         >
 <div className="w-full">
   {errors.problem && (
@@ -240,7 +240,7 @@ export default function SubmissionPage() {
             />
           </div>
 
-          <button
+          {/* <button
             type="submit"
             disabled={!isLeader}
             className={`mt-4 w-full sm:w-3/4 text-white font-[Press_Start_2P] text-xs sm:text-sm px-4 py-3 shadow-[0_0_8px_rgba(255,0,0,0.9)] transition ${
@@ -250,6 +250,14 @@ export default function SubmissionPage() {
             }`}
           >
             {isLeader ? "SUBMIT" : "Only the leader can submit"}
+          </button> */}
+          <button
+            disabled
+            className={`mt-4 w-full sm:w-3/4 text-white font-[Press_Start_2P] text-xs sm:text-sm px-4 py-3 shadow-[0_0_8px_rgba(255,0,0,0.9)] transition ${
+              "bg-black/50 border border-gray-600 cursor-not-allowed"
+            }`}
+          >
+            {"SUBMISSION IS CLOSED"}
           </button>
         </form>
       </div>
