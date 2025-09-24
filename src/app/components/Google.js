@@ -31,7 +31,7 @@ async function getUserContext(accessToken, router) {
       if (userStatus) {
         router.push("/team");
       } else {
-        router.push("/dashboard");
+      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Team Formation has closed." } }));
       }
       return;
     }
