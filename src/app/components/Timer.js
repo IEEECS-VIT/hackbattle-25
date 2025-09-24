@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from 'react';
 
-export default function HackathonTimer() {
-  const hackStartTime = new Date('2025-09-24T08:00:00');
-  const events = [
-    { name: 'Review 1', time: new Date('2025-09-24T16:00:00') },
-    { name: 'Review 2', time: new Date('2025-09-25T02:30:00') },
-    { name: 'Review 3', time: new Date('2025-09-25T12:00:00') },
-    { name: 'Final Pitches', time: new Date('2025-09-25T15:00:00') }
-  ];
+const hackStartTime = new Date('2025-09-24T08:00:00');
+const events = [
+  { name: 'Review 1', time: new Date('2025-09-24T16:00:00') },
+  { name: 'Review 2', time: new Date('2025-09-25T02:30:00') },
+  { name: 'Review 3', time: new Date('2025-09-25T15:00:00') },
+  { name: 'Final Pitches', time: new Date('2025-09-25T17:00:00') }
+];
 
-  const [currentEventIndex, setCurrentEventIndex] = useState(0);
+function getInitialEventIndex(now, events) {
+  const idx = events.findIndex(e => e.time.getTime() > now.getTime());
+  return idx === -1 ? events.length : idx;
+}
+
+export default function HackathonTimer() {
+  const now = new Date();
+
+  const [currentEventIndex, setCurrentEventIndex] = useState(() =>
+    getInitialEventIndex(now, events)
+  );
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
-  const [phase, setPhase] = useState('preHack'); // 'preHack', 'event', 'ended'
+  const [phase, setPhase] = useState(() => {
+    if (now < hackStartTime) return 'preHack';
+    if (currentEventIndex >= events.length) return 'ended';
+    return 'event';
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const now = new Date(); // current time
+      const now = new Date();
 
       if (phase === 'preHack') {
         const diff = hackStartTime.getTime() - now.getTime();
@@ -35,11 +48,14 @@ export default function HackathonTimer() {
 
         const diff = events[currentEventIndex].time.getTime() - now.getTime();
         if (diff <= 0) {
-          if (currentEventIndex < events.length - 1) {
-            setCurrentEventIndex(currentEventIndex + 1);
-          } else {
-            setPhase('ended');
-          }
+          setCurrentEventIndex(prev => {
+            if (prev < events.length - 1) {
+              return prev + 1;
+            } else {
+              setPhase('ended');
+              return prev;
+            }
+          });
         } else {
           const hours = Math.floor(diff / (1000 * 60 * 60));
           const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -50,15 +66,15 @@ export default function HackathonTimer() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [phase, currentEventIndex]); // still can leave dependencies, it works fine now
-  
+  }, [phase, currentEventIndex]);
 
   const TimeBlock = ({ value, label, color }) => (
     <div className="flex flex-col items-center mx-2 sm:mx-4">
-      <div 
+      <div
         className={`${color} p-4 sm:p-6 relative transform transition-transform hover:scale-105`}
         style={{
-          boxShadow: 'inset 4px 4px 0px rgba(205, 133, 63, 0.8), inset -4px -4px 0px rgba(93, 78, 55, 0.8), 0 8px 16px rgba(0, 0, 0, 0.3)',
+          boxShadow:
+            'inset 4px 4px 0px rgba(205, 133, 63, 0.8), inset -4px -4px 0px rgba(93, 78, 55, 0.8), 0 8px 16px rgba(0, 0, 0, 0.3)',
           textShadow: '2px 2px 0px rgba(0, 0, 0, 0.8)'
         }}
       >
