@@ -1,4 +1,9 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { checkStatus } from "../api/user";
 
@@ -19,17 +24,37 @@ async function getUserContext(accessToken, router) {
   try {
     const res = await checkStatus(accessToken);
 
-    localStorage.setItem("accessToken", accessToken);
+    if (res.status === 204) {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "User is not registered" },
+        })
+      );
+      return;
+    } else {
+      const userStatus = res.data?.isInTeam;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("UserStatus", userStatus);
 
-    window.dispatchEvent(
-      new CustomEvent("showToast", { detail: { text: "Login successful" } })
-    );
-
-    router.push("/dashboard");
+      window.dispatchEvent(
+        new CustomEvent("showToast", { detail: { text: "Login successful" } })
+      );
+      if (userStatus) {
+        router.push("/team");
+      } else {
+        router.push("/dashboard");
+        
+      }
+      return;
+    }
   } catch (error) {
     console.error("Error verifying token:", error);
+    window.dispatchEvent(
+      new CustomEvent("showToast", { detail: { text: "Something went wrong" } })
+    );
   }
 }
+
 export async function loginWithGoogle(type, router) {
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
@@ -41,13 +66,16 @@ export async function loginWithGoogle(type, router) {
   const result = await signInWithPopup(auth, provider);
 
   if (type === "internal" && !result.user.email.endsWith("@vitstudent.ac.in")) {
-    window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "You must use a @vitstudent.ac.in email" } }));
+    window.dispatchEvent(
+      new CustomEvent("showToast", {
+        detail: { text: "You must use a @vitstudent.ac.in email" },
+      })
+    );
     return;
   }
 
   await getUserContext(result.user.accessToken, router);
 }
-
 
 export async function logout() {
   await signOut(auth);
