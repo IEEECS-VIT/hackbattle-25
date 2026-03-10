@@ -58,14 +58,14 @@ export default function TeamPage() {
   };
 
   const handleSubmissionClick = () => {
-    // if (team?.members?.length < 5) {
-    //   window.dispatchEvent(
-    //     new CustomEvent("showToast", {
-    //       detail: { text: "Team must have 5 members." },
-    //     })
-    //   );
-    //   return;
-    // }
+    if (team?.members?.length < 5) {
+     window.dispatchEvent(
+      new CustomEvent("showToast", {
+        detail: { text: "Team must have 5 members." },
+       })
+      );
+     return;
+    }
     router.push("/submission");
   };
 
@@ -136,12 +136,12 @@ export default function TeamPage() {
         </button>
 
         <div className="flex flex-row gap-4 text-[1vh] md:text-[2vh]">
-          {/* <button
+           <button
             onClick={handleLeaveTeam}
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg"
           >
             Leave Team
-          </button> */}
+          </button> 
           <button
             onClick={handleSubmissionClick}
             className={`px-6 py-3 rounded-lg shadow-lg text-white font-semibold transition-colors ${"bg-pink-500/70 hover:bg-pink-500/90"}`}

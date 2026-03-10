@@ -1,48 +1,34 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { loginWithGoogle, logout } from "./Google";
 import Toast from "./Toast";
-import { FaSignOutAlt } from "react-icons/fa";
 
 export default function Navbar() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
-  const [userStatus, setUserStatus] = useState(null);
-
-  const handleRedirect = () => {
-    if (userStatus === "true") {
-      router.push("/team");
-    } else if (userStatus === "false") {
-      window.dispatchEvent(
-        new CustomEvent("showToast", { detail: { text: "Team Formation has closed." } })
-      );
-    }
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) setUser(token);
   }, []);
 
-  useEffect(() => {
-    const status = localStorage.getItem("UserStatus");
-    setUserStatus(status);
-  }, []);
-
   const handleLogin = () => setShowLoginModal(true);
 
   const handleChoice = async (type) => {
-    
+    try {
       await loginWithGoogle(type, router);
       const token = localStorage.getItem("accessToken");
       setUser(token);
       setShowLoginModal(false);
-    
+    } catch (err) {
+      window.dispatchEvent(
+        new CustomEvent("showToast", { detail: { text: err.message } })
+      );
+    }
   };
 
   const handleLogout = async () => {
@@ -51,7 +37,9 @@ export default function Navbar() {
       localStorage.removeItem("accessToken");
       setUser(null);
       window.dispatchEvent(
-        new CustomEvent("showToast", { detail: { text: "Logged out successfully" } })
+        new CustomEvent("showToast", {
+          detail: { text: "Logged out successfully" },
+        })
       );
     } catch (error) {
       console.error("Sign-Out Error:", error);
@@ -61,6 +49,7 @@ export default function Navbar() {
   return (
     <>
       <Toast />
+
       {showLoginModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
           <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col gap-6 text-center w-96">
@@ -85,7 +74,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-      {/* Desktop Navbar */}
       <nav className="hidden md:flex fixed top-3 left-1/2 -translate-x-1/2 items-center justify-center gap-8 px-8 py-4 bg-[#02554ACC] rounded-full shadow-lg z-30 w-[70vw]">
         <div className="flex gap-8">
           {[
@@ -105,75 +93,49 @@ export default function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-4 ml-8">
-          <Link
+          <a
             href="https://discord.gg/Qj2qyYQXBF"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
           >
             <Image src="/discord.webp" alt="Discord" height={24} width={24} />
-          </Link>
+          </a>
 
-          {user && (
-            <button
-              onClick={handleRedirect}
-              className="text-xl lg:text-3xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-            >
-              DASHBOARD
-            </button>
-          )}
-
-          <button
+         <button
             onClick={user ? handleLogout : handleLogin}
-            className={user ? "text-white text-3xl hover:scale-110 transition" : "text-xl lg:text-3xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"}
-            title={user ? "Logout" : "Login"}
+            className="px-5 py-2 bg-yellow-500 text-black text-xl lg:text-2xl rounded-full hover:bg-yellow-400"
           >
-            {user ? <FaSignOutAlt /> : "LOGIN"}
-          </button>
+            {user ? "LOGOUT" : "LOGIN"}
+          </button> 
         </div>
       </nav>
+
       {/* Mobile Navbar */}
       <div className="block md:hidden">
         <div className="fixed top-0 left-0 right-0 flex flex-row justify-between items-center px-6 py-4 z-30">
-          <div className="flex items-center gap-4">
-            <button onClick={() => setMenuOpen(true)} className="text-3xl text-white">
-              ☰
-            </button>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="https://discord.gg/Qj2qyYQXBF"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
-            >
-              <Image src="/discord.webp" alt="Discord" height={24} width={24} />
-            </Link>
+          <button
+            onClick={() => setMenuOpen(true)}
+            className=" text-3xl text-white"
+          >
+            ☰
+          </button>
 
-            {user && (
-            <button
-              onClick={handleRedirect}
-              className="text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-            >
-              DASHBOARD
-            </button>
-          )}
-
-            <button
-              onClick={user ? handleLogout : handleLogin}
-              className={user ? "text-white text-4xl hover:scale-110 transition" : "text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"}
-              title={user ? "Logout" : "Login"}
-            >
-              {user ? <FaSignOutAlt size={24}/> : "LOGIN"}
-            </button>
-          </div>
+           <button
+            onClick={user ? handleLogout : handleLogin}
+            className="bg-yellow-500 text-black px-4 py-2 rounded-full text-2xl font-pixeboy"
+          >
+            {user ? "LOGOUT" : "LOGIN"}
+          </button> 
         </div>
+
         {menuOpen && (
           <div
             onClick={() => setMenuOpen(false)}
             className="fixed inset-0 z-30"
           />
         )}
+
         {menuOpen && (
           <div className="fixed top-0 left-0 h-[100dvh] w-[100vw] z-40">
             {/* Borders */}
@@ -181,6 +143,7 @@ export default function Navbar() {
               <div className="h-full w-8 bg-[url('/border.webp')] bg-repeat-y bg-left bg-contain"></div>
               <div className="h-full w-8 bg-[url('/border.webp')] bg-repeat-y bg-right bg-contain"></div>
             </div>
+
             {/* Sidebar */}
             <div className="h-full w-full bg-[url('/menu-bg.webp')] bg-cover flex flex-col p-6 relative z-40 overflow-y-auto">
               <button
@@ -189,11 +152,16 @@ export default function Navbar() {
               >
                 ✕
               </button>
+
               <div className="flex items-center select-none flex-col gap-6 mt-16 pb-20">
                 {[
                   { icon: "/icon1.webp", label: "HOME", path: "home" },
                   { icon: "/icon2.webp", label: "ABOUT", path: "about" },
-                  { icon: "/icon4.webp", label: "PROBLEM STATEMENTS", path: "ps" },
+                  {
+                    icon: "/icon4.webp",
+                    label: "PROBLEM STATEMENTS",
+                    path: "ps",
+                  },
                   { icon: "/icon4.png", label: "JUDGE", path: "speaker" },
                   { icon: "/icon3.webp", label: "FAQs", path: "faqs" },
                 ].map((item, idx) => (
@@ -217,6 +185,7 @@ export default function Navbar() {
                         onDragStart={(e) => e.preventDefault()}
                       />
                     </div>
+
                     <div className="flex-1 h-16 bg-[url('/wood-button.webp')] bg-cover flex items-center justify-center text-amber-100 font-pixeboy text-2xl">
                       {item.label}
                     </div>

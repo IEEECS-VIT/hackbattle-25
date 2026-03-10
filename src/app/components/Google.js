@@ -19,28 +19,17 @@ async function getUserContext(accessToken, router) {
   try {
     const res = await checkStatus(accessToken);
 
-    if (res.status === 204) {
-      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "User is not registered" } }));
-      return;
-    } else {
-      const userStatus = res.data?.isInTeam;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("UserStatus", userStatus);
+    localStorage.setItem("accessToken", accessToken);
 
-      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Login successful" } }));
-      if (userStatus) {
-        router.push("/team");
-      } else {
-      window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Team Formation has closed." } }));
-      }
-      return;
-    }
+    window.dispatchEvent(
+      new CustomEvent("showToast", { detail: { text: "Login successful" } })
+    );
+
+    router.push("/dashboard");
   } catch (error) {
     console.error("Error verifying token:", error);
-    window.dispatchEvent(new CustomEvent("showToast", { detail: { text: "Something went wrong" } }));
   }
 }
-
 export async function loginWithGoogle(type, router) {
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
