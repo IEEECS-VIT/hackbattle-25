@@ -13,6 +13,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const [userStatus, setUserStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleRedirect = () => {
     if (userStatus === "true") {
@@ -38,12 +39,20 @@ export default function Navbar() {
 
   const handleLogin = () => setShowLoginModal(true);
 
-  const handleChoice = async (type) => {
+const handleChoice = async (type) => {
+  if (loading) return; 
+
+  setLoading(true);
+  setShowLoginModal(false);
+
+  try {
     await loginWithGoogle(type, router);
-    const token = localStorage.getItem("accessToken");
-    setUser(token);
-    setShowLoginModal(false);
-  };
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleLogout = async () => {
     try {
@@ -67,6 +76,7 @@ export default function Navbar() {
         <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
           <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col gap-6 text-center w-96">
             <button
+              disabled={loading}
               onClick={() => handleChoice("internal")}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition"
             >

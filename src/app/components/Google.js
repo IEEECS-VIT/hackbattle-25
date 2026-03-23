@@ -55,26 +55,42 @@ async function getUserContext(accessToken, router) {
   }
 }
 
+let isSigningIn = false;
+
 export async function loginWithGoogle(type, router) {
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: "select_account" });
+  if (isSigningIn) return; // 🚫 prevent multiple calls
+  isSigningIn = true;
 
-  if (type === "internal") {
-    provider.setCustomParameters({ hd: "vitstudent.ac.in" });
+  try {
+    const provider = new GoogleAuthProvider();
+
+    const params = { prompt: "select_account" };
+    if (type === "internal") {
+      params.hd = "vitstudent.ac.in";
+    }
+    provider.setCustomParameters(params);
+
+    const result = await signInWithPopup(auth, provider);
+
+    if (
+      type === "internal" &&
+      !result.user.email.endsWith("@vitstudent.ac.in")
+    ) {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "You must use a @vitstudent.ac.in email" },
+        })
+      );
+      return;
+    }
+
+    const token = await result.user.getIdToken();
+    await getUserContext(token, router);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isSigningIn = false;
   }
-
-  const result = await signInWithPopup(auth, provider);
-
-  if (type === "internal" && !result.user.email.endsWith("@vitstudent.ac.in")) {
-    window.dispatchEvent(
-      new CustomEvent("showToast", {
-        detail: { text: "You must use a @vitstudent.ac.in email" },
-      })
-    );
-    return;
-  }
-
-  await getUserContext(result.user.accessToken, router);
 }
 
 export async function logout() {
