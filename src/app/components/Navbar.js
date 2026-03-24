@@ -110,18 +110,7 @@ const handleChoice = async (type) => {
             </a>
           ))}
         </div>
-        <div className="flex items-center gap-4 ml-8">
-         
 
-          {user && (
-            <button
-              onClick={handleRedirect}
-              className="text-xl lg:text-3xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-            >
-              DASHBOARD
-            </button>
-          )}
-        </div>
       </nav>
       {/* Mobile Navbar */}
       <div className="block md:hidden">
