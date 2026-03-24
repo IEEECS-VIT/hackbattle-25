@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import MinecraftTimer from "./Timer";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 

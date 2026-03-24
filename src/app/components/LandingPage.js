@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import MobileLanding from "./MobileLanding";
-import MinecraftTimer from "./Timer";
+
 import { useRouter } from "next/navigation";
 
 export default function Home({ onFinish }) {

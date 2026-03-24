@@ -152,7 +152,7 @@ const handleSubmit = async (e) => {
       <div className="mx-auto relative z-10 w-full max-w-md sm:max-w-lg lg:w-[40vw] bg-[#370000]/60 text-center text-white p-6 rounded-md shadow-[0_0_8px_rgba(255,0,0,0.7)]">
         <form
           className="flex flex-col items-center gap-6 w-full"
-          // onSubmit={handleSubmit}
+           onSubmit={handleSubmit}
         >
 <div className="w-full">
   {errors.problem && (
