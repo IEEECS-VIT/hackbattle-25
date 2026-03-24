@@ -75,15 +75,6 @@ export default function FaqSection() {
       },
     },
     {
-      question: "Will On Duty (OD) be provided ?",
-      answer:
-        "No , reviews will be on nightslips so no OD will be provided .",
-      characterWebM: "/Chicken.gif",
-      characterStyle: {
-        transform: "translateY(158px) translateX(10px) scale(1.2)",
-      },
-    },
-    {
       question: "Is Internal Hack fresher friendly ?",
       answer:
         "Absolutely! HackBattle is designed to support beginners as well as experienced developers. With mentorship,and guidance, freshers will find it the perfect launchpad to learn and grow.",

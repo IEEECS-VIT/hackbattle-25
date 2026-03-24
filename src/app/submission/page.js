@@ -9,6 +9,7 @@ export default function SubmissionPage() {
   const [team, setTeam] = useState(null);
   const [isLeader, setIsLeader] = useState(false);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     problem: "",
@@ -49,7 +50,7 @@ export default function SubmissionPage() {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (!isLeader) return;
+  if (!isLeader || loading) return;
 
   let newErrors = {};
 
@@ -66,15 +67,15 @@ const handleSubmit = async (e) => {
   const figmaRegex =
     /^(https?:\/\/)?(www\.)?figma\.com\/(file|design)\/[A-Za-z0-9]+\/[A-Za-z0-9_-]+(\?.*)?$/;
 
-  // Figma is optional
   if (formData.figma.trim() && !figmaRegex.test(formData.figma))
     newErrors.figma = "Enter a valid Figma file link";
 
   setErrors(newErrors);
-
   if (Object.keys(newErrors).length > 0) return;
 
   try {
+    setLoading(true);
+
     const payload = {
       problem_stmt: formData.problem,
       github_link: formData.github,
@@ -96,9 +97,11 @@ const handleSubmit = async (e) => {
 
     window.dispatchEvent(
       new CustomEvent("showToast", {
-        detail: { text: "Error submitting form. Please try again." },
+        detail: { text: "Error submitting form." },
       })
     );
+  } finally {
+    setLoading(false);
   }
 };
   if (!team)
@@ -152,54 +155,50 @@ const handleSubmit = async (e) => {
       <div className="mx-auto relative z-10 w-full max-w-md sm:max-w-lg lg:w-[40vw] bg-[#370000]/60 text-center text-white p-6 rounded-md shadow-[0_0_8px_rgba(255,0,0,0.7)]">
         <form
           className="flex flex-col items-center gap-6 w-full"
-           onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
-<div className="w-full">
-  {errors.problem && (
-    <p className="text-yellow-400 text-xs text-center">
-      {errors.problem}
-    </p>
-  )}
+          <div className="w-full">
+            {errors.problem && (
+              <p className="text-yellow-400 text-xs text-center">
+                {errors.problem}
+              </p>
+            )}
 
-<div className="w-full relative">
-  <div
-    className="w-full bg-black/60 border-2 border-red-600 text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-3 shadow-[0_0_5px_rgba(255,0,0,0.7)] cursor-pointer"
-    onClick={() => setOpen(!open)}
-  >
-    {formData.problem || "Choose a Problem Statement"}
-  </div>
+            <div className="w-full relative">
+              <div
+                className="w-full bg-black/60 border-2 border-red-600 text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-3 shadow-[0_0_5px_rgba(255,0,0,0.7)] cursor-pointer"
+                onClick={() => setOpen(!open)}
+              >
+                {formData.problem || "Choose a Problem Statement"}
+              </div>
 
-  {open && (
-    <div className="absolute z-20 w-full mt-1 overflow-y-auto bg-black/80 border-2 border-red-600 rounded-md shadow-[0_0_5px_rgba(255,0,0,0.7)]">
-      {[
-        "The Whispering Blocks",
-        "The Living Ledger",
-        "The Sixth Sense Device",
-        "From Passive to Active Knowledge",
-        "The Ambient Health Guardian",
-        "The Shadow Hunter",
-        "The Invisible Scalability Test",
-      ].map((p, index) => (
-        <p
-          key={index}
-          onClick={() => {
-            if (!isLeader) return;
-            setFormData({ ...formData, problem: p });
-            setOpen(false);
-          }}
-          className="text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-2 hover:bg-red-600/40 break-words cursor-pointer border-b border-red-600 last:border-b-0"
-        >
-          {p}
-        </p>
-      ))}
-    </div>
-  )}
-</div>
-
-
-
-</div>
-
+              {open && (
+                <div className="absolute z-20 w-full mt-1 overflow-y-auto bg-black/80 border-2 border-red-600 rounded-md shadow-[0_0_5px_rgba(255,0,0,0.7)]">
+                  {[
+                    "The Whispering Blocks",
+                    "The Living Ledger",
+                    "The Sixth Sense Device",
+                    "From Passive to Active Knowledge",
+                    "The Ambient Health Guardian",
+                    "The Shadow Hunter",
+                    "The Invisible Scalability Test",
+                  ].map((p, index) => (
+                    <p
+                      key={index}
+                      onClick={() => {
+                        if (!isLeader) return;
+                        setFormData({ ...formData, problem: p });
+                        setOpen(false);
+                      }}
+                      className="text-white text-xs sm:text-sm font-[Press_Start_2P] px-2 py-2 hover:bg-red-600/40 break-words cursor-pointer border-b border-red-600 last:border-b-0"
+                    >
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
 
           {/* GitHub */}
           <div className="w-full">
@@ -252,16 +251,19 @@ const handleSubmit = async (e) => {
 
           <button
             type="submit"
-            disabled={!isLeader}
+            disabled={!isLeader || loading}
             className={`mt-4 w-full sm:w-3/4 text-white font-[Press_Start_2P] text-xs sm:text-sm px-4 py-3 shadow-[0_0_8px_rgba(255,0,0,0.9)] transition ${
-              isLeader
+              isLeader && !loading
                 ? "bg-transparent border border-red-600 hover:scale-105"
                 : "bg-black/50 border border-gray-600 cursor-not-allowed"
             }`}
           >
-            {isLeader ? "SUBMIT" : "Only the leader can submit"}
-          </button> 
-          
+            {loading
+              ? "Submitting..."
+              : isLeader
+              ? "SUBMIT"
+              : "Only the leader can submit"}
+          </button>
         </form>
       </div>
     </div>
