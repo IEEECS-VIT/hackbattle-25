@@ -72,7 +72,7 @@ export default function LandingPagePhone() {
 
         </section>
          
-        {/* <div className="relative w-full flex justify-start items-end">
+         <div className="relative w-full flex justify-start items-end">
           <Image
             src="/phone-man.webp"
             alt="character"
@@ -82,7 +82,7 @@ export default function LandingPagePhone() {
             className="h-[40vh] w-auto object-contain"
             draggable={false}
           />
-        </div> */}
+        </div> 
       </div>
     </div>
   );

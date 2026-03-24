@@ -117,14 +117,7 @@ const handleChoice = async (type) => {
           ))}
         </div>
         <div className="flex items-center gap-4 ml-8">
-          <Link
-            href="https://discord.gg/Qj2qyYQXBF"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
-          >
-            <Image src="/discord.webp" alt="Discord" height={24} width={24} />
-          </Link>
+         
 
           {user && (
             <button
@@ -160,14 +153,7 @@ const handleChoice = async (type) => {
             </button>
           </div>
           <div className="flex items-center gap-4">
-            <Link
-              href="https://discord.gg/Qj2qyYQXBF"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
-            >
-              <Image src="/discord.webp" alt="Discord" height={24} width={24} />
-            </Link>
+           
 
             {user && (
               <button
