@@ -8,7 +8,7 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { checkStatus } from "../api/user";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDqRw6_AtXGWnDdlE6d6mCE_2hzB8wL8eA",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "internal-hack26.firebaseapp.com",
   projectId: "internal-hack26",
   storageBucket: "internal-hack26.firebasestorage.app",
