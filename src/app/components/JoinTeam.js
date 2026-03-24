@@ -88,6 +88,8 @@ export default function JoinTeam() {
   const [modal, setModal] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
@@ -199,10 +201,27 @@ export default function JoinTeam() {
     const audio = new Audio("/Glass_dig2.ogg");
     audio.play();
   };
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+ useEffect(() => {
+   const token = localStorage.getItem("accessToken");
 
-  if (!token) return null;
+   if (!token) {
+     window.dispatchEvent(
+       new CustomEvent("showToast", {
+         detail: { text: "Please login first" },
+       })
+     );
+
+     setTimeout(() => {
+       router.replace("/");
+     }, 1200);
+   } else {
+     setIsLoggedIn(true);
+   }
+
+   setIsAuthChecked(true);
+ }, [router]);
+ if (!isAuthChecked) return null;
+ if (!isLoggedIn) return null;
 
   if (loading) {
     return (

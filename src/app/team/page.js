@@ -15,7 +15,6 @@ export default function TeamPage() {
     const getTeamDetails = async () => {
       try {
         const result = await teamDetails();
-        console.log(result, "res");
         if(result.status == 204) {
           router.push("/dashboard");
         }
