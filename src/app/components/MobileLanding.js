@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import MinecraftTimer from "./Timer";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -60,30 +60,19 @@ export default function LandingPagePhone() {
       <div className="relative z-10 flex flex-col items-center justify-start h-full text-center">
         {/* Heading */}
         <section className="flex flex-col items-center font-pixeboy mt-16">
-          <div>
-                      <Image
-                        src="/bob.png"
-                        alt="Discord"
-                        width={200}
-                        height={200}
-                        draggable="false"
-                        className=""
-                      />
-                    </div>
-                    <div className="leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse mt-4">
-            presents
-          </div>
+        
+                    
           <div className="text-7xl [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
-            Hack
+            INTERNAL
           </div>
           <div className="text-7xl -mt-8 [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
-            BATTLE
+            HACK
           </div>
           
 
         </section>
-          <MinecraftTimer />
-        {/* <div className="relative w-full flex justify-start items-end">
+         
+         <div className="relative w-full flex justify-start items-end">
           <Image
             src="/phone-man.webp"
             alt="character"
@@ -93,7 +82,7 @@ export default function LandingPagePhone() {
             className="h-[40vh] w-auto object-contain"
             draggable={false}
           />
-        </div> */}
+        </div> 
       </div>
     </div>
   );

@@ -15,7 +15,6 @@ export default function TeamPage() {
     const getTeamDetails = async () => {
       try {
         const result = await teamDetails();
-        console.log(result, "res");
         if(result.status == 204) {
           router.push("/dashboard");
         }
@@ -41,8 +40,11 @@ export default function TeamPage() {
       }, 1500);
     } catch (err) {
       console.error("Error leaving team:", err);
-      setToastMessage("Failed to leave team");
-    } finally {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Failed to leave team" },
+        })
+      );
       setLoading(false);
     }
   };
@@ -57,17 +59,21 @@ export default function TeamPage() {
     }
   };
 
-  const handleSubmissionClick = () => {
-    // if (team?.members?.length < 5) {
-    //   window.dispatchEvent(
-    //     new CustomEvent("showToast", {
-    //       detail: { text: "Team must have 5 members." },
-    //     })
-    //   );
-    //   return;
-    // }
-    router.push("/submission");
-  };
+
+const handleSubmissionClick = () => {
+  const size = team?.members?.length || 0;
+
+  if (size < 3 || size > 4) {
+    window.dispatchEvent(
+      new CustomEvent("showToast", {
+        detail: { text: "Team must have 3 to 4 members." },
+      })
+    );
+    return;
+  }
+
+  router.push("/submission");
+};
 
   if (!team)
     return (
@@ -136,12 +142,12 @@ export default function TeamPage() {
         </button>
 
         <div className="flex flex-row gap-4 text-[1vh] md:text-[2vh]">
-          {/* <button
+           <button
             onClick={handleLeaveTeam}
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg"
           >
             Leave Team
-          </button> */}
+          </button> 
           <button
             onClick={handleSubmissionClick}
             className={`px-6 py-3 rounded-lg shadow-lg text-white font-semibold transition-colors ${"bg-pink-500/70 hover:bg-pink-500/90"}`}

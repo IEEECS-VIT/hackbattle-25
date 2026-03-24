@@ -5,7 +5,7 @@ import About from "./components/about";
 import FaqSection from "src/components/FaqSection";
 import SpeechBubble from "src/app/components/SpeechBubble";
 import PS from "./components/ps";
-import SpeakerSection from "./components/speaker";
+
 import Marquee from "./components/Marquee";
 import Navbar from "./components/Navbar";
 
@@ -81,7 +81,6 @@ export default function Page() {
 </div>
           <About />
           <PS />
-          <SpeakerSection />
           <FaqSection />
         </>
       )}

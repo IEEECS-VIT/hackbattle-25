@@ -11,33 +11,33 @@ export default function ProblemStatements() {
 
   const statements = [
     {
-      title: "Whispering Blocks",
-      desc: "Create a game or experience where the world isn’t static. The blocks, objects, or behaviours should react, change, or adapt to the player in some way."
+      title: "AI solutions",
+      desc: "I. Education or II. Improving user workflow  or  III.Sustainable development  (You are allowed to choose any one amongst the three options provided)",
     },
     {
-      title: "Living Ledger",
-      desc: "Financial identities today are frozen snapshots of the past. What if they were fluid, evolving, and alive in real time? Reimagine how a person’s financial story could be told—not as numbers on a report, but as something dynamic, predictive, and deeply personal."
+      title: "Gamedev without using a game engine",
+      desc: "Build an original game by implementing core mechanics yourself without relying on full-scale engines like Unity, Unreal, or Godot. Lightweight frameworks such as Pygame, SDL, Web Canvas, or similar low-level libraries are allowed. ",
     },
     {
-      title: "Sixth Sense Device",
-      desc: "Our world is filled with forces we cannot see, hear, or touch. What if we could feel them? Design a way to give humans a 'sixth sense'—a subtle, intuitive channel for perceiving the invisible aspects of their environment."
+      title: "CLI Tools",
+      desc: "Build powerful command-line tools that solve real developer or system-level problems.",
     },
     {
-      title: "From Passive to Active Knowledge",
-      desc: "Knowledge is often consumed passively—but true learning comes from transformation. How might you turn static content into experiences that spark curiosity, action, and creation? Build something that makes knowledge come alive."
+      title: "Extensions",
+      desc: "Develop browser extensions that enhance productivity, accessibility, privacy,or user experience.",
     },
     {
-      title: "Ambient Health Guardian",
-      desc: "Health isn’t limited to hospitals or apps; it lives in our everyday choices, environments, and habits. What if there were a guardian that quietly walked beside us, nudging us toward better health without demanding our attention? Envision what that guardian could be."
+      title: "Smart Cities",
+      desc: "dentify a real urban problem and build a tech-driven solution to improve city infrastructure, public services, or civic management",
     },
     {
-      title: "Shadow Hunter",
-      desc: "Systems and applications often hide weaknesses beneath the surface, invisible until it’s too late. What if you could build something that uncovers these hidden cracks, shining light on vulnerabilities before they can be exploited?"
+      title: "Build for Accessibility",
+      desc: "Design inclusive technology solutions that improve accessibility and independence for users with disabilities. ",
     },
     {
-      title: "Invisible Scalability Test",
-      desc: "Most apps scale well in theory but fail under sudden, unpredictable spikes (think ticket bookings, flash sales, or viral posts). What if you could design a system that stress tests applications invisibly in production, highlighting weak spots without breaking user experience?"
-    }
+      title: "Intelligent Symptom Analysis & Risk Assessment Platform",
+      desc: "Build a structured healthcare reasoning system that analyzes user symptoms and generates grounded risk assessments",
+    },
   ];
 
   return (

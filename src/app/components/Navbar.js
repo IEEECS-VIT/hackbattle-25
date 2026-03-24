@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { loginWithGoogle, logout } from "./Google";
+
 import Toast from "./Toast";
 import { FaSignOutAlt } from "react-icons/fa";
 
@@ -13,13 +13,16 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const [userStatus, setUserStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleRedirect = () => {
     if (userStatus === "true") {
       router.push("/team");
     } else if (userStatus === "false") {
       window.dispatchEvent(
-        new CustomEvent("showToast", { detail: { text: "Team Formation has closed." } })
+        new CustomEvent("showToast", {
+          detail: { text: "Team Formation has closed." },
+        })
       );
     }
   };
@@ -36,14 +39,20 @@ export default function Navbar() {
 
   const handleLogin = () => setShowLoginModal(true);
 
-  const handleChoice = async (type) => {
-    
-      await loginWithGoogle(type, router);
-      const token = localStorage.getItem("accessToken");
-      setUser(token);
-      setShowLoginModal(false);
-    
-  };
+const handleChoice = async (type) => {
+  if (loading) return; 
+
+  setLoading(true);
+  setShowLoginModal(false);
+
+  try {
+    await loginWithGoogle(type, router);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleLogout = async () => {
     try {
@@ -51,7 +60,9 @@ export default function Navbar() {
       localStorage.removeItem("accessToken");
       setUser(null);
       window.dispatchEvent(
-        new CustomEvent("showToast", { detail: { text: "Logged out successfully" } })
+        new CustomEvent("showToast", {
+          detail: { text: "Logged out successfully" },
+        })
       );
     } catch (error) {
       console.error("Sign-Out Error:", error);
@@ -65,17 +76,13 @@ export default function Navbar() {
         <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
           <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col gap-6 text-center w-96">
             <button
+              disabled={loading}
               onClick={() => handleChoice("internal")}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition"
             >
               Internal Participant
             </button>
-            <button
-              onClick={() => handleChoice("external")}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition"
-            >
-              External Participant
-            </button>
+          
             <button
               onClick={() => setShowLoginModal(false)}
               className="mt-4 text-gray-600 hover:underline"
@@ -92,7 +99,6 @@ export default function Navbar() {
             { label: "Home", path: "#home" },
             { label: "About", path: "#about" },
             { label: "Problem Statements", path: "#ps" },
-            { label: "Judge", path: "#speaker" },
             { label: "FAQ", path: "#faqs" },
           ].map(({ label, path }) => (
             <a
@@ -104,67 +110,41 @@ export default function Navbar() {
             </a>
           ))}
         </div>
-        <div className="flex items-center gap-4 ml-8">
-          <Link
-            href="https://discord.gg/Qj2qyYQXBF"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
-          >
-            <Image src="/discord.webp" alt="Discord" height={24} width={24} />
-          </Link>
 
-          {user && (
-            <button
-              onClick={handleRedirect}
-              className="text-xl lg:text-3xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-            >
-              DASHBOARD
-            </button>
-          )}
-
-          <button
-            onClick={user ? handleLogout : handleLogin}
-            className={user ? "text-white text-3xl hover:scale-110 transition" : "text-xl lg:text-3xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"}
-            title={user ? "Logout" : "Login"}
-          >
-            {user ? <FaSignOutAlt /> : "LOGIN"}
-          </button>
-        </div>
       </nav>
       {/* Mobile Navbar */}
       <div className="block md:hidden">
         <div className="fixed top-0 left-0 right-0 flex flex-row justify-between items-center px-6 py-4 z-30">
           <div className="flex items-center gap-4">
-            <button onClick={() => setMenuOpen(true)} className="text-3xl text-white">
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="text-3xl text-white"
+            >
               ☰
             </button>
           </div>
           <div className="flex items-center gap-4">
-            <Link
-              href="https://discord.gg/Qj2qyYQXBF"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#1e2e24] p-2 rounded-full hover:scale-110 transition"
-            >
-              <Image src="/discord.webp" alt="Discord" height={24} width={24} />
-            </Link>
+           
 
             {user && (
-            <button
-              onClick={handleRedirect}
-              className="text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-            >
-              DASHBOARD
-            </button>
-          )}
+              <button
+                onClick={handleRedirect}
+                className="text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
+              >
+                DASHBOARD
+              </button>
+            )}
 
             <button
               onClick={user ? handleLogout : handleLogin}
-              className={user ? "text-white text-4xl hover:scale-110 transition" : "text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"}
+              className={
+                user
+                  ? "text-white text-4xl hover:scale-110 transition"
+                  : "text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
+              }
               title={user ? "Logout" : "Login"}
             >
-              {user ? <FaSignOutAlt size={24}/> : "LOGIN"}
+              {user ? <FaSignOutAlt size={24} /> : "LOGIN"}
             </button>
           </div>
         </div>
@@ -193,8 +173,11 @@ export default function Navbar() {
                 {[
                   { icon: "/icon1.webp", label: "HOME", path: "home" },
                   { icon: "/icon2.webp", label: "ABOUT", path: "about" },
-                  { icon: "/icon4.webp", label: "PROBLEM STATEMENTS", path: "ps" },
-                  { icon: "/icon4.png", label: "JUDGE", path: "speaker" },
+                  {
+                    icon: "/icon4.webp",
+                    label: "PROBLEM STATEMENTS",
+                    path: "ps",
+                  },
                   { icon: "/icon3.webp", label: "FAQs", path: "faqs" },
                 ].map((item, idx) => (
                   <button

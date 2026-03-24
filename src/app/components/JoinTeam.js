@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 const Snowflakes = () => {
   const [snowflakes, setSnowflakes] = useState([]);
 
+
   useEffect(() => {
     const generatedSnowflakes = Array.from({ length: 150 }).map((_, i) => {
       const style = {
@@ -47,7 +48,9 @@ const Modal = ({ title, inputLabel, buttonText, onClose, onSubmit }) => {
   const minecraftModalClipPath =
     "[clip-path:polygon(0px_16px,_8px_16px,_8px_8px,_16px_8px,_16px_0px,_calc(100%_-_16px)_0px,_calc(100%_-_16px)_8px,_calc(100%_-_8px)_8px,_calc(100%_-_8px)_16px,_100%_16px,_100%_calc(100%_-_16px),_calc(100%_-_8px)_calc(100%_-_16px),_calc(100%_-_8px)_calc(100%_-_8px),_calc(100%_-_16px)_calc(100%_-_8px),_calc(100%_-_16px)_100%,_16px_100%,_16px_calc(100%_-_8px),_8px_calc(100%_-_8px),_8px_calc(100%_-_16px),_0px_calc(100%_-_16px))]";
 
-  return (
+
+  
+    return (
     <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50 font-pixeboy">
       <div
         className={`bg-[#0f1a2e] border-4 border-[#8be9fd] shadow-[inset_0_0_0_4px_#0a141c,0_0_20px_rgba(139,233,253,0.5)] p-8 max-w-md w-full text-center text-white ${minecraftModalClipPath}`}
@@ -85,6 +88,23 @@ export default function JoinTeam() {
   const [modal, setModal] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Please login first" },
+        })
+      );
+
+      setTimeout(() => {
+        router.replace("/");
+      }, 1200);
+    }
+  }, [router]);
 
   useEffect(() => {
     const preload = async () => {
@@ -181,6 +201,27 @@ export default function JoinTeam() {
     const audio = new Audio("/Glass_dig2.ogg");
     audio.play();
   };
+ useEffect(() => {
+   const token = localStorage.getItem("accessToken");
+
+   if (!token) {
+     window.dispatchEvent(
+       new CustomEvent("showToast", {
+         detail: { text: "Please login first" },
+       })
+     );
+
+     setTimeout(() => {
+       router.replace("/");
+     }, 1200);
+   } else {
+     setIsLoggedIn(true);
+   }
+
+   setIsAuthChecked(true);
+ }, [router]);
+ if (!isAuthChecked) return null;
+ if (!isLoggedIn) return null;
 
   if (loading) {
     return (

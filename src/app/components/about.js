@@ -17,7 +17,7 @@ const About = () => {
       <div className="hidden md:flex w-full h-full bg-[url('/about.webp')] bg-center bg-cover items-center justify-center relative">
         <div className="relative w-[47vw] h-[72vh] rounded-[22px] bg-center bg-[length:100%_auto]">
           <Image
-          loading='lazy'
+            loading="lazy"
             src="/about-marble.webp"
             alt="Overlay Box"
             width={594}
@@ -31,8 +31,9 @@ const About = () => {
                 ABOUT
               </h2>
               <p className="text-[1.1rem] leading-[1.6] text-shadow-lg text-shadow-black/80">
-                Join the adrenaline-pumping 36-hour HackBattle by IEEE CS VIT, where tech innovators gather for
-                groundbreaking challenges, keynote sessions, and engaging activities that ignite creativity and
+                Join the adrenaline-pumping Internal Hack by IEEE CS VIT, where
+                tech innovators gather for groundbreaking challenges, keynote
+                sessions, and engaging activities that ignite creativity and
                 drive innovation.
               </p>
             </div>
@@ -45,7 +46,7 @@ const About = () => {
 
         <div className="absolute right-[4vw] bottom-[3vh] z-[4]">
           <Image
-          loading='lazy'
+            loading="lazy"
             src="/campfire.webp"
             alt="Campfire"
             width={400}
@@ -60,7 +61,7 @@ const About = () => {
       <div className="md:hidden h-[100vh] overflow-x-hidden bg-[url('/mobile-about-bg.svg')] bg-no-repeat bg-cover flex flex-col items-center relative text-[#FAF6DA] font-['Press_Start_2P']">
         <div className="relative w-full mt-[25vh]">
           <Image
-          loading='lazy'
+            loading="lazy"
             src="/glass-back.webp"
             alt="Glass Back"
             width={500}
@@ -71,7 +72,7 @@ const About = () => {
               scale-110 opacity-90 -rotate-[7deg]"
           />
           <Image
-          loading='lazy'
+            loading="lazy"
             src="/glass-front-2.webp"
             alt="Glass Front"
             width={500}
@@ -95,9 +96,10 @@ const About = () => {
           <div className="absolute inset-0 z-[2] flex items-center justify-center pointer-events-none">
             <div className="w-[84%] text-center text-[#EFE7A1]">
               <p className="text-[0.75rem] leading-[1.95] opacity-95">
-                Join the adrenaline-pumping 36-hour HackBattle by IEEE CS VIT, where tech innovators gather
-                for groundbreaking challenges, keynote sessions, and engaging activities that ignite creativity
-                and drive innovation.
+                Join the adrenaline-pumping 3Internal Hack by IEEE CS VIT, where
+                tech innovators gather for groundbreaking challenges, keynote
+                sessions, and engaging activities that ignite creativity and
+                drive innovation.
               </p>
             </div>
           </div>
@@ -107,7 +109,7 @@ const About = () => {
 
         <div className="absolute left-[32vw] bottom-[3vw] z-[4]">
           <Image
-          loading='lazy'
+            loading="lazy"
             src="/campfire.webp"
             alt="Campfire"
             width={500}
