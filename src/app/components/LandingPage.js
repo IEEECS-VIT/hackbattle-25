@@ -205,25 +205,6 @@ export default function Home({ onFinish }) {
             className="w-40 sm:w-56 lg:w-80"
           />
         </div>
-        <div className="absolute bottom-58 right-3 -translate-x-1/2 z-10">
-          <Image
-            width={0}
-            height={0}
-            src="/video/frog.gif"
-            alt="frog"
-            className="w-30 h-full"
-          />
-        </div>
-        <div className="absolute bottom-10 right-19 -translate-x-1/2 z-10">
-          <Image
-            width={0}
-            height={0}
-            src="/video/axo.gif"
-            alt="axo"
-            className="w-30 h-full"
-            draggable="false"
-          />
-        </div>
       </div>
     </div>
   );
