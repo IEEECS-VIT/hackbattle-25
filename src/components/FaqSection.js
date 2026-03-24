@@ -97,7 +97,7 @@ export default function FaqSection() {
     {
       question: "What is the required team size ?",
       answer:
-        "Teams must have 3-5 members. Solo participation is not permitted, but members can come from any background or discipline.",
+        "Teams must have 3-4 members. Solo participation is not permitted, but members can come from any background or discipline.",
       headImageSrc: "/minecraft-head-zombie.png",
       characterWebM: "/Zombie.gif",
       characterStyle: {
