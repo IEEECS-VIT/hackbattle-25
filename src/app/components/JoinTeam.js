@@ -48,21 +48,7 @@ const Modal = ({ title, inputLabel, buttonText, onClose, onSubmit }) => {
   const minecraftModalClipPath =
     "[clip-path:polygon(0px_16px,_8px_16px,_8px_8px,_16px_8px,_16px_0px,_calc(100%_-_16px)_0px,_calc(100%_-_16px)_8px,_calc(100%_-_8px)_8px,_calc(100%_-_8px)_16px,_100%_16px,_100%_calc(100%_-_16px),_calc(100%_-_8px)_calc(100%_-_16px),_calc(100%_-_8px)_calc(100%_-_8px),_calc(100%_-_16px)_calc(100%_-_8px),_calc(100%_-_16px)_100%,_16px_100%,_16px_calc(100%_-_8px),_8px_calc(100%_-_8px),_8px_calc(100%_-_16px),_0px_calc(100%_-_16px))]";
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
 
-    if (!token) {
-      window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "Please login first" },
-        })
-      );
-
-      setTimeout(() => {
-        router.replace("/");
-      }, 1200);
-    }
-  }, [router]);
   
     return (
     <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50 font-pixeboy">
@@ -102,6 +88,21 @@ export default function JoinTeam() {
   const [modal, setModal] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Please login first" },
+        })
+      );
+
+      setTimeout(() => {
+        router.replace("/");
+      }, 1200);
+    }
+  }, [router]);
 
   useEffect(() => {
     const preload = async () => {
