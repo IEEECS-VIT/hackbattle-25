@@ -41,8 +41,11 @@ export default function TeamPage() {
       }, 1500);
     } catch (err) {
       console.error("Error leaving team:", err);
-      setToastMessage("Failed to leave team");
-    } finally {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Failed to leave team" },
+        })
+      );
       setLoading(false);
     }
   };
@@ -57,17 +60,21 @@ export default function TeamPage() {
     }
   };
 
-  const handleSubmissionClick = () => {
-    if (team?.members?.length < 5) {
-     window.dispatchEvent(
+
+const handleSubmissionClick = () => {
+  const size = team?.members?.length || 0;
+
+  if (size < 3 || size > 4) {
+    window.dispatchEvent(
       new CustomEvent("showToast", {
-        detail: { text: "Team must have 5 members." },
-       })
-      );
-     return;
-    }
-    router.push("/submission");
-  };
+        detail: { text: "Team must have 3 to 4 members." },
+      })
+    );
+    return;
+  }
+
+  router.push("/submission");
+};
 
   if (!team)
     return (
