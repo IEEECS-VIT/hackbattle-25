@@ -175,13 +175,13 @@ const handleSubmit = async (e) => {
               {open && (
                 <div className="absolute z-20 w-full mt-1 overflow-y-auto bg-black/80 border-2 border-red-600 rounded-md shadow-[0_0_5px_rgba(255,0,0,0.7)]">
                   {[
-                    "The Whispering Blocks",
-                    "The Living Ledger",
-                    "The Sixth Sense Device",
-                    "From Passive to Active Knowledge",
-                    "The Ambient Health Guardian",
-                    "The Shadow Hunter",
-                    "The Invisible Scalability Test",
+                    "AI Solutions ",
+                    "Gamedev",
+                    " CLI Tools",
+                    "Extensions",
+                    "Smart Cities",
+                    "Build for Accessibility",
+                    "Intelligent Symptom Analysis & Risk Assessment Platform",
                   ].map((p, index) => (
                     <p
                       key={index}
