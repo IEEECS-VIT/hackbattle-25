@@ -8,13 +8,13 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { checkStatus } from "../api/user";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: "hackbattle-25.firebaseapp.com",
-  projectId: "hackbattle-25",
-  storageBucket: "hackbattle-25.appspot.com",
-  messagingSenderId: "523134092665",
-  appId: "1:523134092665:web:c1cc17fed967ad83ee1ba8",
-  measurementId: "G-KE9DQEGDGG",
+  apiKey: "AIzaSyDqRw6_AtXGWnDdlE6d6mCE_2hzB8wL8eA",
+  authDomain: "internal-hack26.firebaseapp.com",
+  projectId: "internal-hack26",
+  storageBucket: "internal-hack26.firebasestorage.app",
+  messagingSenderId: "1024748063916",
+  appId: "1:1024748063916:web:5ed5ceb6ed57f2ccd06309",
+  measurementId: "G-N347GY77JB",
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -43,7 +43,6 @@ async function getUserContext(accessToken, router) {
         router.push("/team");
       } else {
         router.push("/dashboard");
-        
       }
       return;
     }
@@ -58,7 +57,7 @@ async function getUserContext(accessToken, router) {
 let isSigningIn = false;
 
 export async function loginWithGoogle(type, router) {
-  if (isSigningIn) return; // 🚫 prevent multiple calls
+  if (isSigningIn) return;
   isSigningIn = true;
 
   try {
