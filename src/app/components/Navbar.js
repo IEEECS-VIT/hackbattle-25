@@ -82,12 +82,7 @@ const handleChoice = async (type) => {
             >
               Internal Participant
             </button>
-            <button
-              onClick={() => handleChoice("external")}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition"
-            >
-              External Participant
-            </button>
+          
             <button
               onClick={() => setShowLoginModal(false)}
               className="mt-4 text-gray-600 hover:underline"
@@ -104,7 +99,6 @@ const handleChoice = async (type) => {
             { label: "Home", path: "#home" },
             { label: "About", path: "#about" },
             { label: "Problem Statements", path: "#ps" },
-            { label: "Judge", path: "#speaker" },
             { label: "FAQ", path: "#faqs" },
           ].map(({ label, path }) => (
             <a
@@ -207,7 +201,6 @@ const handleChoice = async (type) => {
                     label: "PROBLEM STATEMENTS",
                     path: "ps",
                   },
-                  { icon: "/icon4.png", label: "JUDGE", path: "speaker" },
                   { icon: "/icon3.webp", label: "FAQs", path: "faqs" },
                 ].map((item, idx) => (
                   <button
