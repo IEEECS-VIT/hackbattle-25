@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { loginWithGoogle, logout } from "./Google";
+
 import Toast from "./Toast";
 import { FaSignOutAlt } from "react-icons/fa";
 
@@ -121,18 +121,6 @@ const handleChoice = async (type) => {
               DASHBOARD
             </button>
           )}
-
-          <button
-            onClick={user ? handleLogout : handleLogin}
-            className={
-              user
-                ? "text-white text-3xl hover:scale-110 transition"
-                : "text-xl lg:text-3xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-            }
-            title={user ? "Logout" : "Login"}
-          >
-            {user ? <FaSignOutAlt /> : "LOGIN"}
-          </button>
         </div>
       </nav>
       {/* Mobile Navbar */}

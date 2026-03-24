@@ -75,16 +75,6 @@ export default function FaqSection() {
       },
     },
     {
-      question: "Is Internal Hack fresher friendly ?",
-      answer:
-        "Absolutely! HackBattle is designed to support beginners as well as experienced developers. With mentorship,and guidance, freshers will find it the perfect launchpad to learn and grow.",
-      headImageSrc: "/minecraft-head-creeper.jpeg",
-      characterWebM: "/Creeper.webp",
-      characterStyle: {
-        transform: "translateY(200px) translateX(20px) scale(1.2)",
-      },
-    },
-    {
       question: "What should I bring ?",
       answer:
         "Bring your laptop, charger, extension cord and yourself.",

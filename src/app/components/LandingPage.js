@@ -2,6 +2,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import MobileLanding from "./MobileLanding";
+import { loginWithGoogle } from "./Google";
+import { logout } from "./Google";
+import { FaSignOutAlt } from "react-icons/fa";
 
 import { useRouter } from "next/navigation";
 
@@ -11,6 +14,22 @@ export default function Home({ onFinish }) {
   const [user, setUser] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
   const router = useRouter();
+  const handleLogin = async () => {
+    try {
+      await loginWithGoogle("internal", router);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleLogout = async () => {
+    try {
+      await logout();
+      localStorage.removeItem("accessToken");
+      setUser(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -122,7 +141,6 @@ export default function Home({ onFinish }) {
             draggable="false"
           />
         </div>
-
         {/* Right vines + leaves */}
         <div className="absolute top-0 right-3 flex z-10">
           <div className="relative flex">
@@ -140,18 +158,42 @@ export default function Home({ onFinish }) {
             ))}
           </div>
         </div>
-
         {/* Hero section */}
         <section className="relative w-[50vw] z-10 flex flex-col items-center text-center mt-24">
-          <div className="z-10 font-pixeboy text-[16vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
+          <div className="z-10 font-pixeboy text-[16vh] leading-none">
             INTERNAL HACK
           </div>
 
-          <div className="relative b mt-6 text-[5vh]">
-            THE ULTIMATE HACKATHON
+          <div className="relative mt-6 text-[5vh]">THE ULTIMATE HACKATHON</div>
+
+          <div className="flex items-center gap-6 mt-8 z-20">
+            {user ? (
+              <>
+                <button
+                  onClick={() => router.push("/team")}
+                  className="px-8 py-3 text-2xl font-pixeboy bg-[#02554A] text-white rounded-xl shadow-lg hover:scale-105 transition"
+                >
+                  DASHBOARD
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="text-white text-3xl hover:scale-110 transition"
+                  title="Logout"
+                >
+                  <FaSignOutAlt />
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={handleLogin}
+                className="px-8 py-3 text-2xl font-pixeboy bg-[#F3EDCB] text-[#02554A] rounded-xl shadow-lg hover:scale-105 hover:bg-white transition"
+              >
+                LOGIN
+              </button>
+            )}
           </div>
         </section>
-
         {/* Characters */}
         <div className="absolute bottom-45 right-[8%] -translate-x-1/2 z-10">
           <Image
