@@ -143,26 +143,12 @@ export default function Home({ onFinish }) {
 
         {/* Hero section */}
         <section className="relative w-[50vw] z-10 flex flex-col items-center text-center mt-24">
-          <div>
-            <Image
-              src="/bob.png"
-              alt="Discord"
-              width={200}
-              height={200}
-              draggable="false"
-              className=""
-            />
-          </div>
-          <div className="leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse mt-4">
-            presents
-          </div>
           <div className="z-10 font-pixeboy text-[16vh] leading-none [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] animate-glow-pulse">
-            HACKBATTLE
+            INTERNAL HACK
           </div>
-          
 
-          <div className="relative b mt-6">
-            <MinecraftTimer />
+          <div className="relative b mt-6 text-[5vh]">
+            THE ULTIMATE HACKATHON
           </div>
         </section>
 
