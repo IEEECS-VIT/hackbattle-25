@@ -67,7 +67,7 @@ export default function FaqSection() {
     {
       question: "Do I need Minecraft to join ?",
       answer:
-        "Nope! The Minecraft theme is just for fun. HackBattle is about solving real-world challenges with creativity and technology. You don’t need Minecraft installed or any prior experience with the game.",
+        "Nope! The Minecraft theme is just for fun. Internal Hack is about solving real-world challenges with creativity and technology. You don’t need Minecraft installed or any prior experience with the game.",
       headImageSrc: "/minecraft-head-alex.jpeg",
       characterWebM: "/Alex.gif",
       characterStyle: {

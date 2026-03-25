@@ -289,8 +289,8 @@ export default function TeamPage() {
           </div>
         </div>
 
-        {/* Mobile Layout (FIXED) */}
-        <div className="block sm:hidden absolute top-[35vh] bottom-0 w-full max-w-sm mx-auto flex flex-col items-center gap-6 px-2 overflow-y-auto pb-12 z-20">
+        {/* Mobile Layout */}
+        <div className="block sm:hidden absolute w-full max-w-sm mx-auto space-y-6 px-2">
           {leader && (
             <div className="flex flex-col items-center">
               <div className="relative">
