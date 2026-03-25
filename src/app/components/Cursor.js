@@ -9,7 +9,28 @@ export default function CustomCursor() {
     if (isTouchDevice) return;
 
     const cursor = document.createElement("img");
-    cursor.src = "/diamond-pickaxe.webp";
+    
+    // SVG pickaxe as fallback (works everywhere)
+  const pickaxeSvg =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect x='8' y='2' width='3' height='24' fill='%238B4513'/%3E%3Cpolygon points='6,4 10,8 6,8' fill='%23FFD700'/%3E%3Crect x='6' y='8' width='8' height='3' fill='%23FFD700'/%3E%3C/svg%3E";
+
+    
+    cursor.src = pickaxeSvg;
+    
+    // Try to load WebP if supported, otherwise use SVG
+    const supportsWebP = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = canvas.height = 1;
+      return canvas.toDataURL("image/webp").indexOf("image/webp") === 5;
+    };
+
+    if (supportsWebP()) {
+      cursor.src = "/diamond-pickaxe.webp";
+      cursor.onerror = () => {
+        cursor.src = pickaxeSvg; // Fallback to SVG if WebP fails
+      };
+    }
+    
     cursor.style.position = "fixed";
     cursor.style.pointerEvents = "none";
     cursor.style.width = "36px";
@@ -18,6 +39,7 @@ export default function CustomCursor() {
     cursor.style.transform = "translate(-40%, -40%) scaleX(-1)";
     cursor.style.transition = "transform 0.1s ease";
     cursor.style.willChange = "transform";
+    cursor.style.imageRendering = "crisp-edges";
     document.body.appendChild(cursor);
 
     const style = document.createElement("style");
