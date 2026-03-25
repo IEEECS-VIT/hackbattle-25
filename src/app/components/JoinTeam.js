@@ -139,36 +139,54 @@ export default function JoinTeam() {
   }, []);
 
   const handleJoinTeam = async (code) => {
-    setLoading(true);
-    const result = await joinTeam(code);
-    if (result.status == 204) {
-    setLoading(false);
-      window.dispatchEvent(
-        new CustomEvent("showToast", { detail: { text: "Invalid Team Code" } })
-      );
-    } else if (result.status == 200) {
-    setLoading(false);
-      localStorage.setItem("UserStatus", "true");
-      window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "Team Joined Successfully" },
-        })
-      );
-      router.push("/team");
-    } else if (result.status == 208) {
-    setLoading(false);
-      window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "Team has the maximum number of members allowed." },
-        })
-      );
-    } else if (result.status == 201) {
-    setLoading(false);
-      window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "You are already in a team." },
-        })
-      );
+    try {
+      setLoading(true);
+
+      const result = await joinTeam(code);
+
+      if (result.status == 200) {
+        setLoading(false);
+        localStorage.setItem("UserStatus", "true");
+        window.dispatchEvent(
+          new CustomEvent("showToast", {
+            detail: { text: "Team Joined Successfully" },
+          })
+        );
+        router.push("/team");
+      } else if (result.status == 201) {
+        setLoading(false);
+        window.dispatchEvent(
+          new CustomEvent("showToast", {
+            detail: { text: "You are already in a team." },
+          })
+        );
+      }
+    } catch (err) {
+      setLoading(false);
+
+      const status = err.response?.status;
+
+      if (status === 404 || status === 400) {
+        window.dispatchEvent(
+          new CustomEvent("showToast", {
+            detail: { text: "Invalid Team Code" },
+          })
+        );
+      } else if (status === 208) {
+        window.dispatchEvent(
+          new CustomEvent("showToast", {
+            detail: {
+              text: "Team already has 4 members (maximum limit reached)",
+            },
+          })
+        );
+      } else {
+        window.dispatchEvent(
+          new CustomEvent("showToast", {
+            detail: { text: "Something went wrong. Try again." },
+          })
+        );
+      }
     }
   };
 
