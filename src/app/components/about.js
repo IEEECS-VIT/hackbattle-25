@@ -96,7 +96,7 @@ const About = () => {
           <div className="absolute inset-0 z-[2] flex items-center justify-center pointer-events-none">
             <div className="w-[84%] text-center text-[#EFE7A1]">
               <p className="text-[0.75rem] leading-[1.95] opacity-95">
-                Join the adrenaline-pumping 3Internal Hack by IEEE CS VIT, where
+                Join the adrenaline-pumping Internal Hack by IEEE CS VIT, where
                 tech innovators gather for groundbreaking challenges, keynote
                 sessions, and engaging activities that ignite creativity and
                 drive innovation.

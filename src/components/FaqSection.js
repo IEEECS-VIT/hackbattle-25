@@ -59,7 +59,7 @@ export default function FaqSection() {
     {
       question: "What is Internal Hack ?",
       answer:
-        "Internal Hack, organized by IEEE Computer Society (IEEE CS), is a dynamic  hackathon that goes beyond coding. It’s a journey of teamwork, mentorship, and innovation where participants tackle real-world problem statements, attend workshops and tech talks, and network with industry leaders.",
+        "Internal Hack, organized by IEEE Computer Society (IEEE CS), is a dynamic  hackathon that goes beyond coding. It’s a journey of teamwork, mentorship, and innovation where participants tackle real-world problem statements.",
       headImageSrc: "/minecraft-head-steve.jpeg",
       characterWebM: "/Steve.gif",
       characterStyle: { transform: "translateY(110px) scale(2.0)" },
