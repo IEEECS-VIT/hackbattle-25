@@ -28,7 +28,7 @@ export default function ProblemStatements() {
     },
     {
       title: "Smart Cities",
-      desc: "dentify a real urban problem and build a tech-driven solution to improve city infrastructure, public services, or civic management",
+      desc: "Identify a real urban problem and build a tech-driven solution to improve city infrastructure, public services, or civic management",
     },
     {
       title: "Build for Accessibility",

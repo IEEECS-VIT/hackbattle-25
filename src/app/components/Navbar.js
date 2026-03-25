@@ -37,7 +37,6 @@ export default function Navbar() {
     setUserStatus(status);
   }, []);
 
-  const handleLogin = () => setShowLoginModal(true);
 
 const handleChoice = async (type) => {
   if (loading) return; 
@@ -54,44 +53,11 @@ const handleChoice = async (type) => {
   }
 };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      localStorage.removeItem("accessToken");
-      setUser(null);
-      window.dispatchEvent(
-        new CustomEvent("showToast", {
-          detail: { text: "Logged out successfully" },
-        })
-      );
-    } catch (error) {
-      console.error("Sign-Out Error:", error);
-    }
-  };
+  
 
   return (
     <>
       <Toast />
-      {showLoginModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
-          <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col gap-6 text-center w-96">
-            <button
-              disabled={loading}
-              onClick={() => handleChoice("internal")}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition"
-            >
-              Internal Participant
-            </button>
-          
-            <button
-              onClick={() => setShowLoginModal(false)}
-              className="mt-4 text-gray-600 hover:underline"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
       {/* Desktop Navbar */}
       <nav className="hidden md:flex fixed top-3 left-1/2 -translate-x-1/2 items-center justify-center gap-8 px-8 py-4 bg-[#02554ACC] rounded-full shadow-lg z-30 w-[70vw]">
         <div className="flex gap-8">
@@ -124,28 +90,6 @@ const handleChoice = async (type) => {
             </button>
           </div>
           <div className="flex items-center gap-4">
-           
-
-            {user && (
-              <button
-                onClick={handleRedirect}
-                className="text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-              >
-                DASHBOARD
-              </button>
-            )}
-
-            <button
-              onClick={user ? handleLogout : handleLogin}
-              className={
-                user
-                  ? "text-white text-4xl hover:scale-110 transition"
-                  : "text-2xl font-bold font-pixeboy text-[#f8f5c0] hover:text-white transition"
-              }
-              title={user ? "Logout" : "Login"}
-            >
-              {user ? <FaSignOutAlt size={24} /> : "LOGIN"}
-            </button>
           </div>
         </div>
         {menuOpen && (
