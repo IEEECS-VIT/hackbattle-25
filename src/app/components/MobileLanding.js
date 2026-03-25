@@ -4,11 +4,34 @@ import Image from "next/image";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { loginWithGoogle, logout } from "./Google";
 
 export default function LandingPagePhone() {
   const [user, setUser] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
   const router = useRouter();
+  const handleLogin = async () => {
+    try {
+      await loginWithGoogle("internal", router);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleLogout = async () => {
+    try {
+      await logout();
+      localStorage.removeItem("accessToken");
+      setUser(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) setUser(token);
+  }, []);
+
  useEffect(() => {
    const storedUser = localStorage.getItem("user");
    if (storedUser) setUser(JSON.parse(storedUser));
@@ -60,19 +83,43 @@ export default function LandingPagePhone() {
       <div className="relative z-10 flex flex-col items-center justify-start h-full text-center">
         {/* Heading */}
         <section className="flex flex-col items-center font-pixeboy mt-16">
-        
-                    
           <div className="text-7xl [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
             INTERNAL
           </div>
+
           <div className="text-7xl -mt-8 [text-shadow:4px_4px_4px_var(--tw-shadow-color)] shadow-[#FFF58C] text-[#F3EDCB] leading-tight">
             HACK
           </div>
-          
 
+          <div className="mt-6 flex gap-4 z-20">
+            {user ? (
+              <>
+                <button
+                  onClick={handleRedirect}
+                  className="px-6 py-3 text-lg bg-[#02554A] text-white rounded-xl shadow-lg hover:scale-105 transition"
+                >
+                  DASHBOARD
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-3 text-lg bg-red-500 text-white rounded-xl shadow-lg hover:scale-105 transition"
+                >
+                  LOGOUT
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={handleLogin}
+                className="px-8 py-3 text-lg bg-[#F3EDCB] text-[#02554A] rounded-xl shadow-lg hover:scale-105 hover:bg-white transition"
+              >
+                LOGIN
+              </button>
+            )}
+          </div>
         </section>
-         
-         <div className="relative w-full flex justify-start items-end">
+
+       {/* <div className="relative w-full flex justify-start items-end">
           <Image
             src="/phone-man.webp"
             alt="character"
@@ -82,7 +129,7 @@ export default function LandingPagePhone() {
             className="h-[40vh] w-auto object-contain"
             draggable={false}
           />
-        </div> 
+        </div> */}
       </div>
     </div>
   );
