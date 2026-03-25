@@ -7,7 +7,7 @@ import Toast from "../components/Toast";
 
 export default function TeamPage() {
   const [team, setTeam] = useState(null);
-  const [loading, setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const router = useRouter();
 
@@ -15,7 +15,7 @@ export default function TeamPage() {
     const getTeamDetails = async () => {
       try {
         const result = await teamDetails();
-        if(result.status == 204) {
+        if (result.status == 204) {
           router.push("/dashboard");
         }
         setTeam(result.data);
@@ -59,21 +59,20 @@ export default function TeamPage() {
     }
   };
 
+  const handleSubmissionClick = () => {
+    const size = team?.members?.length || 0;
 
-const handleSubmissionClick = () => {
-  const size = team?.members?.length || 0;
+    if (size < 3 || size > 4) {
+      window.dispatchEvent(
+        new CustomEvent("showToast", {
+          detail: { text: "Team must have 3 to 4 members." },
+        })
+      );
+      return;
+    }
 
-  if (size < 3 || size > 4) {
-    window.dispatchEvent(
-      new CustomEvent("showToast", {
-        detail: { text: "Team must have 3 to 4 members." },
-      })
-    );
-    return;
-  }
-
-  router.push("/submission");
-};
+    router.push("/submission");
+  };
 
   if (!team)
     return (
@@ -132,7 +131,7 @@ const handleSubmissionClick = () => {
         />
 
         {/* Top Nav */}
-        <div className="fixed z-20 p-4 flex justify-between items-center w-full top-0 left-0">
+        <div className="absolute z-20 p-4 flex justify-between items-start w-full top-4 md:top-4">
           <button
             onClick={() => router.push("/")}
             className="w-11 h-10 sm:w-15 sm:h-15 bg-pink-500/70 hover:bg-pink-500/90 transition-colors flex items-center justify-center rounded-lg shadow-lg"
@@ -158,7 +157,7 @@ const handleSubmissionClick = () => {
         </div>
 
         {/* Team Name + Code */}
-        <div className="text-center text-white px-4 w-full h-full mt-40 md:mt-32">
+        <div className="text-center text-white px-4 w-full h-full mt-24 md:mt-12">
           <h1 className="text-pink-500 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             {team.name}
           </h1>
@@ -303,7 +302,7 @@ const handleSubmissionClick = () => {
                   className="w-72 h-auto"
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <p className=" text-xs text-center  font-bold">
+                  <p className="text-xs text-center font-bold text-white">
                     {leader.name}
                   </p>
                   <p className="text-sm text-pink-200">Leader</p>
@@ -322,9 +321,7 @@ const handleSubmissionClick = () => {
                   className="w-72 h-auto"
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="text-xs text-center text-white">
-                    {member.name}
-                  </p>
+                  <p className="text-xs text-center text-white">{member.name}</p>
 
                   <p className="text-sm text-pink-200">Member</p>
                 </div>
